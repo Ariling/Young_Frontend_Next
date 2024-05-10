@@ -17,17 +17,48 @@
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  -ms-overflow-style: none;
+  min-height: 100vh;
+}
+::-webkit-scrollbar {
+display: none;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+main{
+  position: relative;
+}
+
+@font-face {
+  font-family: 'PartialSansKR-Regular';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-1@1.1/PartialSansKR-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SpoqaHanSansNeo-Regular';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SpoqaHanSansNeo-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@layer components{
+  .bg--layout{
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    max-width: 1000px;
+    width : 100%;
+    background-size: cover;
+
+    background-position: center;
+  }
+  .img--layout{
+    position : absolute;
+    top : 0;
+    left : 0;
+    object-fit: cover;
+    min-height: 100vh;
+    max-width: 1000px;
+    width : 100%;
   }
 }
