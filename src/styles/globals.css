@@ -20,6 +20,9 @@ body {
   -ms-overflow-style: none;
   min-height: 100vh;
 }
+main{
+  letter-spacing: 6%;
+}
 ::-webkit-scrollbar {
 display: none;
 }

@@ -28,6 +28,7 @@
     "@babel/preset-env": "^7.24.5",
     "@babel/preset-react": "^7.24.1",
     "@emotion/babel-plugin": "^11.11.0",
+    "@svgr/webpack": "^8.1.0",
     "@types/file-saver": "^2.0.7",
     "@types/node": "^20",
     "@types/react": "^18",
