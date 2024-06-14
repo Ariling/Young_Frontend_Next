@@ -6,6 +6,7 @@ import { presentImpressionArray } from '../utils/questionArray';
 import { QuestionBtn } from '@/styles/questionStyle';
 import { ReducerProps } from '@/types/Treducer';
 import { useQuestionStore } from '@/store/question';
+import Router from 'next/router';
 
 const PresentImpressionQuestion = (props : ReducerProps) => {
     const testSrc = 'https://cdn.pixabay.com/photo/2015/06/19/21/24/avenue-815297_1280.jpg';
@@ -21,7 +22,7 @@ const PresentImpressionQuestion = (props : ReducerProps) => {
             return(
                 <QuestionBtn key={e} onClick={()=>{
                     changeQuestion(4, idx)
-                    props.dispatch({type : 'PLUS'})
+                    Router.replace("/guestLoading")
                 }}>{e}</QuestionBtn>
             )
         })}

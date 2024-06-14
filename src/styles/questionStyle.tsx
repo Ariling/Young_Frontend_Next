@@ -31,3 +31,13 @@ export const QuestionBtn = styled.button(()=>[
         font-size: 14px;
     `
 ])
+
+export const Text = styled.div`
+  color: var(--Brown, #64422e);
+  text-align: center;
+  font-family: "Spoqa Han Sans Neo";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+`;
