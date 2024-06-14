@@ -1,8 +1,16 @@
+import { ImageBox } from '@/styles/questionStyle'
+import Image from 'next/image'
 import React from 'react'
 
-const GuestImage = () => {
+type prop = {
+    src : string
+}
+
+const GuestImage = (prop : prop) => {
   return (
-    <div>GuestImage</div>
+    <ImageBox>
+        <Image src={prop.src} alt='이미지 경로' fill className='rounded-[20px]'/>
+    </ImageBox>
   )
 }
 

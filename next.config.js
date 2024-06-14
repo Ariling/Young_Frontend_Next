@@ -11,6 +11,9 @@ const nextConfig = withTwin({
   },
   reactStrictMode: false,
   swcMinify: true,
+  images : {
+    domains : ["cdn.pixabay.com"],
+  }
 });
 
 module.exports = nextConfig;

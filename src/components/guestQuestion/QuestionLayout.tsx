@@ -1,4 +1,6 @@
 import React, { useReducer } from 'react'
+import FaceQuestion from './FaceQuestion';
+import EmojiQuestion from './EmojiQuestion';
 
 type Action = {type : 'PLUS'} | {type : 'MINUS'};
 
@@ -20,7 +22,7 @@ const QuestionLayout = () => {
     const [num, dispatch] = useReducer(reducer, 1);
   return (
     <main className='bg--layout flex flex-col items-center justify-center p-7'>
-        안녕
+        {num === 1 ? <FaceQuestion /> : <EmojiQuestion />}
     </main>
   )
 }
