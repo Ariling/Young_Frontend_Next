@@ -19,7 +19,7 @@ export function reducer(state : number, action :Action ){
 }
 
 const QuestionLayout = () => {
-    const [num, dispatch] = useReducer(reducer, 1);
+    const [num, dispatch] = useReducer(reducer, 2);
   return (
     <main className='bg--layout flex flex-col items-center justify-center p-7'>
         {num === 1 ? <FaceQuestion /> : <EmojiQuestion />}

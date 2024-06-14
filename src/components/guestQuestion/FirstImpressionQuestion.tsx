@@ -1,18 +1,18 @@
 import React from 'react'
 import GuestImage from '../utils/GuestImage';
 import QuestionContent from '../utils/QuestionContent';
-import { EmojiArray } from '../utils/questionArray';
+import { firstImpressionArray } from '../utils/questionArray';
 import { QuestionBtn } from '@/styles/questionStyle';
 import { useGetSuffix } from '@/hooks/useGetSuffix';
 
-const EmojiQuestion = () => {
+const FirstImpressionQuestion = () => {
     const testSrc = 'https://cdn.pixabay.com/photo/2015/06/19/21/24/avenue-815297_1280.jpg';
     const testName = "루씨"
   return (
     <>
             <GuestImage src={testSrc}/>
         <QuestionContent 
-        children2={EmojiArray.map((e, idx)=>{
+        children2={firstImpressionArray.map((e, idx)=>{
             return(
                 <QuestionBtn key={e}>{e}</QuestionBtn>
             )
@@ -20,13 +20,13 @@ const EmojiQuestion = () => {
         >
         <>
                     {testName}
-        {useGetSuffix(testName, 2)}
+        {useGetSuffix(testName, 4)}
         <br />
-          이모지라면
+        처음 봤을 때
             </>
         </QuestionContent>
     </>
   )
 }
 
-export default EmojiQuestion
+export default FirstImpressionQuestion

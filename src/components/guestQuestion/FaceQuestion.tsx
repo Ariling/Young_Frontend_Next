@@ -1,6 +1,6 @@
 import React from 'react'
 import GuestImage from '../utils/GuestImage'
-import { ContentBox, QuestionBtn } from '@/styles/questionStyle';
+import { QuestionBtn } from '@/styles/questionStyle';
 import { useGetSuffix } from '@/hooks/useGetSuffix';
 import { FaceArray } from '../utils/questionArray';
 import QuestionContent from '../utils/QuestionContent';
@@ -20,7 +20,7 @@ const FaceQuestion = () => {
         >
         <>
                     {testName}
-        {useGetSuffix(testName)}
+        {useGetSuffix(testName, 1)}
           <br />
           00상이야!{" "}
             </>
