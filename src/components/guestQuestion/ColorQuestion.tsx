@@ -2,7 +2,7 @@ import React from 'react'
 import GuestImage from '../utils/GuestImage';
 import QuestionContent from '../utils/QuestionContent';
 import { QuestionBtn } from '@/styles/questionStyle';
-import { ColorArray } from '../utils/questionArray';
+import { ColorArray, ColorObject } from '../utils/questionArray';
 import { useGetSuffix } from '@/hooks/useGetSuffix';
 import { ReducerProps } from '@/types/Treducer';
 import { useQuestionStore } from '@/store/question';
@@ -17,10 +17,11 @@ const ColorQuestion = (props : ReducerProps) => {
         <QuestionContent 
         children2={ColorArray.map((e, idx)=>{
             return(
-                <QuestionBtn key={e} onClick={()=>{
+                <QuestionBtn key={e} className={`${ColorObject[idx]}`} onClick={()=>{
                     changeQuestion(2, idx)
                     props.dispatch({type : 'PLUS'})
-                }}>{e}</QuestionBtn>
+                }}
+                >{e}</QuestionBtn>
             )
         })}
         >

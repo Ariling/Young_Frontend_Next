@@ -28,7 +28,7 @@ export const QuestionBtn = styled.button(()=>[
         border : 1px solid #866b5b;
         box-shadow: inset -1px -2px 6px rgba(0, 0, 0, 0.15);
         font-weight: 700;
-        font-size: 14px;
+        font-size: 16px;
     `
 ])
 
