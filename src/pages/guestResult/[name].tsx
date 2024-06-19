@@ -3,11 +3,11 @@ import Back from "@/svg/back.svg";
 import Home from "@/svg/home.svg";
 import React from "react";
 import { useGetSuffix } from "@/hooks/useGetSuffix";
-import GuestImage from "@/components/utils/GuestImage";
 import { testGuestResult } from "@/components/utils/testData";
 import { UtilBtn } from "@/styles/buttonStyle";
 import Footer from "@/components/layout/Footer";
 import GuestResultLayout from "@/components/layout/GuestResultLayout";
+import NicknameTitle from "@/components/utils/NicknameTitle";
 
 const OtherGuestPage = () => {
   //여기서 SSR로 활용할 예정
@@ -18,15 +18,15 @@ const OtherGuestPage = () => {
   return (
     <>
       <main className="bg--layout">
-        <div className="flex flex-col justify-center p-7">
+        <div className="flex flex-col justify-center p-7 ">
           <div className="flex justify-start mb-9">
             <Back onClick={() => router.back()} />
           </div>
           <div className="flex flex-col items-center">
-            <div className=" font-Neo font-bold text-xl text-[#64422e] mb-12">
+            <NicknameTitle>
               다른 친구들이 생각하는 {otherGuestName}
               {useGetSuffix(otherGuestName, 1)}?
-            </div>
+            </NicknameTitle>
             <GuestResultLayout
               imgsrc={testSrc}
               title={testGuestResult.title}

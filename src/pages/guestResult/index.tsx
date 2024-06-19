@@ -6,6 +6,7 @@ import React from "react";
 import Home from "@/svg/home.svg";
 import Footer from "@/components/layout/Footer";
 import { useRouter } from "next/router";
+import NicknameTitle from "@/components/utils/NicknameTitle";
 
 const Index = () => {
   const router = useRouter();
@@ -17,10 +18,10 @@ const Index = () => {
       <main className="bg--layout">
         <div className="flex flex-col justify-center p-7">
           <div className="flex flex-col items-center">
-            <div className=" font-Neo font-bold text-xl text-[#64422e] mb-12">
+            <NicknameTitle>
               내가 생각하는 {nickname}
               {useGetSuffix(nickname, 1)}?
-            </div>
+            </NicknameTitle>
             <GuestResultLayout
               imgsrc={testSrc}
               title={testGuestResult.title}
