@@ -29,6 +29,14 @@ export const QuestionBtn = styled.button(()=>[
         box-shadow: inset -1px -2px 6px rgba(0, 0, 0, 0.15);
         font-weight: 700;
         font-size: 16px;
+        &:hover{
+            background-color: #d7b27f;
+            color : white
+        }
+        &:active{
+            background-color: #866b5b;
+            color : white
+        }
     `
 ])
 
