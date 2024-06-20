@@ -27,9 +27,8 @@ export default Footer;
 
 const FooterContainer = styled.div`
   z-index: 1000;
-  margin-top: 80px;
   position: absolute;
-  bottom: 0;
+  top: 100%;
   display: flex;
   flex-direction: row;
   align-items: flex-start;

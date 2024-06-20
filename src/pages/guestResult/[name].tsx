@@ -18,7 +18,7 @@ const OtherGuestPage = () => {
   return (
     <>
       <main className="bg--layout">
-        <div className="flex flex-col justify-center p-7 ">
+        <div className="flex flex-col justify-center p-7 mb-20">
           <div className="flex justify-start mb-9">
             <Back onClick={() => router.back()} />
           </div>

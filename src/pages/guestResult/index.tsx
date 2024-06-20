@@ -16,7 +16,7 @@ const Index = () => {
   return (
     <>
       <main className="bg--layout">
-        <div className="flex flex-col justify-center p-7">
+        <div className="flex flex-col justify-center p-7 mb-20">
           <div className="flex flex-col items-center">
             <NicknameTitle>
               내가 생각하는 {nickname}

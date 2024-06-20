@@ -31,7 +31,7 @@ const Index = () => {
   return (
     <>
       <main className="bg--layout">
-        <div className="flex flex-col justify-center p-7 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+        <div className="flex flex-col justify-center p-7 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mb-20">
           <div className="flex justify-start mb-9">
             <Back onClick={() => router.back()} />
           </div>
