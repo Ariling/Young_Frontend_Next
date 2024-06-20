@@ -43,7 +43,9 @@ const Index = () => {
             <>
               <div className="mb-2" key={e.index}>
                 <div className="flex text-sm gap-3">
-                  <div className=" w-16">{titleArray[e.index]}</div>
+                  <div className=" w-16">
+                    {e.index - 1 === -1 ? null : titleArray[e.index - 1]}
+                  </div>
                   <PercentageBarContainer>
                     <PercentageBar width={e.percent} />
                   </PercentageBarContainer>
