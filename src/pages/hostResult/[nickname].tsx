@@ -5,7 +5,7 @@ import Back from "@/svg/back.svg";
 import Right from "@/svg/arrow-right.svg";
 import { useRouter } from "next/router";
 import React, { ReactNode } from "react";
-import { styled } from "twin.macro";
+import { css, styled } from "twin.macro";
 
 const Index = () => {
   const router = useRouter();
@@ -41,13 +41,7 @@ const Index = () => {
               {useGetSuffix(otherGuestName, 2)} 생각하는 {hostNickname}
               {useGetSuffix(hostNickname, 1)}?
             </NicknameTitle>
-            <WhiteBox className=" font-Neo">
-              <QNAResult result={"강아지상"}>
-                <>
-                  {hostNickname}
-                  {useGetSuffix(hostNickname, 1)} OO상이야
-                </>
-              </QNAResult>
+            <WhiteBox className=" font-Neo" isStatistic={false}>
               <QNAResult result={"강아지상"}>
                 <>
                   {hostNickname}
@@ -90,14 +84,24 @@ const Index = () => {
 
 export default Index;
 
-export const WhiteBox = styled.div`
-  width: 320px;
-  display: flex;
-  flex-direction: column;
-  background-color: white;
-  margin-bottom: 120px;
-  padding: 20px 16px;
-  gap: 20px;
-  border-radius: 12px;
-  font-weight: 700;
-`;
+export const WhiteBox = styled.div(
+  ({ isStatistic }: { isStatistic: boolean }) => [
+    css`
+      width: 320px;
+      display: flex;
+      flex-direction: column;
+      background-color: white;
+      padding: 20px 16px;
+      gap: 20px;
+      border-radius: 12px;
+      font-weight: 700;
+    `,
+    isStatistic
+      ? css`
+          margin-bottom: 20px;
+        `
+      : css`
+          margin-bottom: 120px;
+        `,
+  ]
+);
