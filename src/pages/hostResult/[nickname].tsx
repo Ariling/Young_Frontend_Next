@@ -87,7 +87,9 @@ export default Index;
 export const WhiteBox = styled.div(
   ({ isStatistic }: { isStatistic: boolean }) => [
     css`
+      position: relative;
       width: 320px;
+      min-height: 360px;
       display: flex;
       flex-direction: column;
       background-color: white;

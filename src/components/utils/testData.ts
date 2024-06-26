@@ -32,5 +32,29 @@ export const testHostResult: Idata = {
       id: "6590745eaba8b1a315e7d33f",
       name: "게스트3",
     },
+    {
+      id: "6590226b82dcf588bf8c6742",
+      name: "게스트1",
+    },
+    {
+      id: "659022a382dcf588bf8c674c",
+      name: "게스트2",
+    },
+    {
+      id: "6590745eaba8b1a315e7d33b",
+      name: "게스트3",
+    },
+    {
+      id: "6590226b82dcf588bf8c6741",
+      name: "게스트7",
+    },
+    {
+      id: "659022a382dcf588bf8c674z",
+      name: "게스트8",
+    },
+    {
+      id: "6590745eaba8b1a315e7d33q",
+      name: "게스트9",
+    },
   ],
 };

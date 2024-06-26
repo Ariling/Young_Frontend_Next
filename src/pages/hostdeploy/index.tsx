@@ -7,10 +7,14 @@ import { useGetSuffix } from "@/hooks/useGetSuffix";
 import { useHostResultStore } from "@/store/hostresult";
 import { UtilBtn } from "@/styles/buttonStyle";
 import { useRouter } from "next/router";
-import Home from "@/svg/home.svg";
+import Copy from "@/svg/copy.svg";
+import Download from "@/svg/download.svg";
+import Report from "@/svg/report-icon.svg";
+import File from "@/svg/file.svg";
 import React, { useEffect, useState } from "react";
 import { WhiteBox } from "../hostResult/[nickname]";
 import { styled } from "twin.macro";
+import Pagination from "@/components/utils/Paginatioin";
 
 const Index = () => {
   const data = useHostResultStore.use.data();
@@ -24,7 +28,7 @@ const Index = () => {
     setData(testHostResult);
   }, []);
   // 일단 되는지 테스트..
-  const [visibleGuests, setVisibleGuests] = useState(6);
+  const [pageNum, setPageNum] = useState(1);
   return (
     <>
       <main className="bg--layout">
@@ -50,11 +54,11 @@ const Index = () => {
                 <div className="mt-4 flex flex-col gap-5 mb-28">
                   <UtilBtn isUrl={false} onClick={() => router.push("/login")}>
                     이미지 다운로드
-                    <Home />
+                    <Download />
                   </UtilBtn>
                   <UtilBtn isUrl={false} onClick={() => router.push("/login")}>
                     질문별 통계 보러가기
-                    <Home />
+                    <Report />
                   </UtilBtn>
                 </div>
                 <div>
@@ -72,7 +76,7 @@ const Index = () => {
                     </TableHeaderContainer>
                     {data.guests
                       .reverse()
-                      .slice(0, visibleGuests)
+                      .slice(pageNum * 6 - 6, pageNum * 6)
                       .map((guest) => (
                         <TableListContainer key={guest!.id}>
                           <NicknameBox>
@@ -80,7 +84,7 @@ const Index = () => {
                           </NicknameBox>
                           <AnswerBox>
                             <ListText>
-                              <Home
+                              <File
                                 onClick={() =>
                                   router.push(`/hostResult/${guest.name}`)
                                 }
@@ -89,6 +93,11 @@ const Index = () => {
                           </AnswerBox>
                         </TableListContainer>
                       ))}
+                    <Pagination
+                      totalPageNum={Math.ceil(data.guests.length / 5)}
+                      pageNum={pageNum}
+                      setPageNum={setPageNum}
+                    />
                   </WhiteBox>
                 </div>
                 <div>
@@ -97,7 +106,7 @@ const Index = () => {
                   </div>
                   <UtilBtn isUrl={true} onClick={() => router.push("/login")}>
                     물어보러가기
-                    <Home />
+                    <Copy />
                   </UtilBtn>
                 </div>
               </>
@@ -112,7 +121,7 @@ const Index = () => {
                   </div>
                   <UtilBtn isUrl={true} onClick={() => router.push("/login")}>
                     물어보러가기
-                    <Home />
+                    <Copy />
                   </UtilBtn>
                 </div>
               </>
