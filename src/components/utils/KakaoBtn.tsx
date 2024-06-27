@@ -1,13 +1,13 @@
 import React from "react";
 import Kakao from "@/svg/kakaologin.svg";
 import { signIn } from "next-auth/react";
+import { kakaoLoginURL } from "../login/loginInfo";
 
 const KakaoBtn = () => {
-  const startKakao = async () => {
-    await signIn("kakao", {
-      redirect: true,
-      callbackUrl: "/",
-    });
+  const startKakao = () => {
+    if (typeof window !== "undefined") {
+      window.location.href = kakaoLoginURL;
+    }
   };
   return <Kakao className="z-10" onClick={startKakao} />;
 };
