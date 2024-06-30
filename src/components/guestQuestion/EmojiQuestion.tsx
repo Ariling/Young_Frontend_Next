@@ -6,15 +6,17 @@ import { QuestionBtn } from "@/styles/questionStyle";
 import { useGetSuffix } from "@/hooks/useGetSuffix";
 import { ReducerProps } from "@/types/Treducer";
 import { useQuestionStore } from "@/store/question";
+import useGetImage from "@/query/useGetImage";
 
 const EmojiQuestion = (props: ReducerProps) => {
-  const testSrc =
-    "https://cdn.pixabay.com/photo/2015/06/19/21/24/avenue-815297_1280.jpg";
   const testName = "루씨";
   const changeQuestion = useQuestionStore.use.changeQuestion();
+  const imageCode = useQuestionStore.use.questionImg();
+  const changeImgCode = useQuestionStore.use.changeImage();
+  const { imgUrl } = useGetImage(imageCode);
   return (
     <>
-      <GuestImage src={testSrc} />
+      <GuestImage src={imgUrl} />
       <QuestionContent
         children2={EmojiArray.map((e, idx) => {
           return (

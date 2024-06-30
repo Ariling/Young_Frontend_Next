@@ -6,15 +6,17 @@ import { FaceArray } from "../utils/questionArray";
 import QuestionContent from "../layout/QuestionContent";
 import { useQuestionStore } from "@/store/question";
 import { ReducerProps } from "@/types/Treducer";
+import useGetImage from "@/query/useGetImage";
 
 const FaceQuestion = (props: ReducerProps) => {
-  const testSrc =
-    "https://cdn.pixabay.com/photo/2015/06/19/21/24/avenue-815297_1280.jpg";
   const testName = "루씨";
   const changeQuestion = useQuestionStore.use.changeQuestion();
+  const imageCode = useQuestionStore.use.questionImg();
+  const changeImgCode = useQuestionStore.use.changeImage();
+  const { imgUrl } = useGetImage(imageCode);
   return (
     <>
-      <GuestImage src={testSrc} />
+      <GuestImage src={imgUrl} />
       <QuestionContent
         children2={FaceArray.map((e, idx) => {
           return (
@@ -22,6 +24,7 @@ const FaceQuestion = (props: ReducerProps) => {
               key={e}
               onClick={() => {
                 changeQuestion(0, idx);
+                changeImgCode(String(idx + 1), 2);
                 props.dispatch({ type: "PLUS" });
               }}
             >
