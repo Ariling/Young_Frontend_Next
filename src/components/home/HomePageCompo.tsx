@@ -3,6 +3,7 @@ import BG from "@/images/BG.png";
 import React from "react";
 import NicknameInput from "../layout/NicknameInput";
 import KakaoBtn from "../utils/KakaoBtn";
+import { useGetSuffix } from "@/hooks/useGetSuffix";
 
 const HomePageCompo = ({ hostName }: { hostName: string }) => {
   return (
@@ -11,7 +12,8 @@ const HomePageCompo = ({ hostName }: { hostName: string }) => {
       <div className="font-PartialSans text-[32px] z-10 text-center text-[#64422E] mb-16">
         내가 생각하는
         <br />
-        {hostName}은?
+        {hostName}
+        {useGetSuffix(hostName, 1)}?
       </div>
       <div className="z-10 flex flex-col justify-center items-center gap-3">
         <NicknameInput />

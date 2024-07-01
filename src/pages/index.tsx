@@ -25,7 +25,8 @@ export default function Home({ props }: IProps) {
 export const getServerSideProps: GetServerSideProps<{ props: TProps }> = async (
   context
 ) => {
-  const hostId = context.params?.hostId as string | undefined;
+  // 이럴 땐 query를 해야한다. params는 /뒤에 해당하는거라고 보면 된다. [hostId].tsx 이런식으로!
+  const hostId = context.query.hostId as string | undefined;
   if (!hostId || hostId === "") {
     return {
       redirect: {
