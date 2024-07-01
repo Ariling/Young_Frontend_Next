@@ -6,17 +6,15 @@ import { FaceArray } from "../utils/questionArray";
 import QuestionContent from "../layout/QuestionContent";
 import { useQuestionStore } from "@/store/question";
 import { ReducerProps } from "@/types/Treducer";
-import useGetImage from "@/query/useGetImage";
+import SurveyImageCompo from "../utils/SurveyImageCompo";
 
 const FaceQuestion = (props: ReducerProps) => {
   const testName = "루씨";
   const changeQuestion = useQuestionStore.use.changeQuestion();
-  const imageCode = useQuestionStore.use.questionImg();
   const changeImgCode = useQuestionStore.use.changeImage();
-  const { imgUrl } = useGetImage(imageCode);
   return (
     <>
-      <GuestImage src={imgUrl} />
+      <SurveyImageCompo />
       <QuestionContent
         children2={FaceArray.map((e, idx) => {
           return (

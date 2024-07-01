@@ -1,7 +1,3 @@
-import Image from "next/image";
-import BG from "../images/BG.png";
-import KakaoBtn from "@/components/utils/KakaoBtn";
-import NicknameInput from "@/components/layout/NicknameInput";
 import { GetServerSideProps } from "next";
 import { BASE_URL } from "@/config";
 import axios from "axios";

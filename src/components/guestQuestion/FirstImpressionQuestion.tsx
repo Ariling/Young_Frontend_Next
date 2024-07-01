@@ -1,20 +1,18 @@
 import React from "react";
-import GuestImage from "../utils/GuestImage";
 import QuestionContent from "../layout/QuestionContent";
 import { firstImpressionArray } from "../utils/questionArray";
 import { QuestionBtn } from "@/styles/questionStyle";
 import { useGetSuffix } from "@/hooks/useGetSuffix";
 import { useQuestionStore } from "@/store/question";
 import { ReducerProps } from "@/types/Treducer";
+import SurveyImageCompo from "../utils/SurveyImageCompo";
 
 const FirstImpressionQuestion = (props: ReducerProps) => {
-  const testSrc =
-    "https://cdn.pixabay.com/photo/2015/06/19/21/24/avenue-815297_1280.jpg";
   const testName = "루씨";
   const changeQuestion = useQuestionStore.use.changeQuestion();
   return (
     <>
-      <GuestImage src={testSrc} />
+      <SurveyImageCompo />
       <QuestionContent
         children2={firstImpressionArray.map((e, idx) => {
           return (
