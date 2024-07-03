@@ -8,35 +8,33 @@ import { IuserInfo, useUserStore } from "@/store/user";
 const KakaoLogin = () => {
   const route = useRouter();
   let code: string | null = null;
-  let previousPage = "";
+  // let previousPage = "";
   if (typeof window !== "undefined") {
     code = new URL(window.location.href).searchParams.get("code");
     // 이전 페이지 정보를 데려와야 다르게 라우팅을 할 수가 있음.
-    previousPage = new URL(document.referrer).pathname;
+    // previousPage = new URL(document.referrer).pathname;
   }
   const setUsesrInfo = useUserStore.use.setInfo();
+  const resetUserInfo = useUserStore.use.resetInfo();
   useEffect(() => {
-    console.log(previousPage);
+    console.log(code);
     const getData = async () => {
       const data = await getLogin(code);
-      if (data === 400) {
-        alert("에러가 일어났습니다 다시 시도해주세요");
-        setTimeout(() => {
-          route.back();
-        }, 500);
-      } else if (data === 404) {
-        setTimeout(() => {
-          route.replace("/signup");
-        }, 500);
-      } else if (data && typeof data !== "number") {
+      if (data && typeof data !== "number") {
         setUsesrInfo(data.data as IuserInfo);
         setTimeout(() => {
-          route.replace("/hostResult");
-        }, 500);
-      } else {
-        setTimeout(() => {
-          route.back();
-        }, 500);
+          const getUserInfo = useUserStore.getState().userInfo;
+          console.log(getUserInfo);
+          if (getUserInfo.status === 404) {
+            //route.push("/signup");
+            resetUserInfo();
+          } else if (getUserInfo.status === 400) {
+            //route.back();
+            resetUserInfo();
+          } else if (getUserInfo.status === 200) {
+            //route.replace("/hostdeploy");
+          }
+        }, 2000);
       }
     };
     getData();

@@ -4,9 +4,11 @@ import { PersistOptions, createJSONStorage, persist } from "zustand/middleware";
 import createSelectors from ".";
 
 export interface IuserInfo {
-  id: string;
-  hostName: string;
-  token: string;
+  status: number;
+  message: string;
+  id?: string;
+  hostName?: string;
+  token?: string;
 }
 
 type TUserStore = {
@@ -25,6 +27,8 @@ export const useUserStore = createSelectors(
     (persist as userPersist)(
       (set, get) => ({
         userInfo: {
+          status: 0,
+          message: "",
           id: "",
           hostName: "",
           token: "",
@@ -37,6 +41,8 @@ export const useUserStore = createSelectors(
         resetInfo: () => {
           set({
             userInfo: {
+              status: 0,
+              message: "",
               id: "",
               hostName: "",
               token: "",
