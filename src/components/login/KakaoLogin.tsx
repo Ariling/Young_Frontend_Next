@@ -4,40 +4,44 @@ import LoadingCompo from "../utils/LoadingCompo";
 import { Text } from "@/styles/questionStyle";
 import { getLogin } from "@/apis/host";
 import { IuserInfo, useUserStore } from "@/store/user";
+import axios from "axios";
 
 const KakaoLogin = () => {
   const route = useRouter();
   let code: string | null = null;
-  // let previousPage = "";
   if (typeof window !== "undefined") {
     code = new URL(window.location.href).searchParams.get("code");
-    // 이전 페이지 정보를 데려와야 다르게 라우팅을 할 수가 있음.
-    // previousPage = new URL(document.referrer).pathname;
   }
   const setUsesrInfo = useUserStore.use.setInfo();
-  const resetUserInfo = useUserStore.use.resetInfo();
   useEffect(() => {
-    console.log(code);
     const getData = async () => {
-      const data = await getLogin(code);
-      if (data && typeof data !== "number") {
-        setUsesrInfo(data.data as IuserInfo);
-        setTimeout(() => {
-          const getUserInfo = useUserStore.getState().userInfo;
-          console.log(getUserInfo);
-          if (getUserInfo.status === 404) {
-            //route.push("/signup");
-            resetUserInfo();
-          } else if (getUserInfo.status === 400) {
-            //route.back();
-            resetUserInfo();
-          } else if (getUserInfo.status === 200) {
-            //route.replace("/hostdeploy");
+      try {
+        const data = await getLogin(code);
+        if (data && typeof data === "object") {
+          setUsesrInfo(data.data as IuserInfo);
+          setTimeout(() => {
+            const pageRoute = localStorage.getItem("page");
+            if (pageRoute === "/") {
+              route.replace("/guestQuestion");
+            } else {
+              route.replace("/hostdeploy");
+            }
+          }, 2000);
+        }
+      } catch (error) {
+        if (axios.isAxiosError(error) && error.response) {
+          const data = error.response.status;
+          if (data === 404 || data === 400) {
+            route.replace("/signup");
+          } else {
+            console.log("왜 에러가 뜰까..?", data);
           }
-        }, 2000);
+        }
       }
     };
     getData();
+    // 되든 안되든 삭제시키기
+    localStorage.removeItem("page");
   }, []);
   return (
     <LoadingCompo>

@@ -10,10 +10,6 @@ export const getLogin = async (prop: string | null) => {
     const data = axios.post(url, dataProp);
     return data;
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      const result = error.response;
-      return result?.status;
-    }
     return;
   }
 };
