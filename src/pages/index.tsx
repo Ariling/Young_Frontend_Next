@@ -35,19 +35,24 @@ export const getServerSideProps: GetServerSideProps<{ props: TProps }> = async (
       },
     };
   }
-  const API_URL = `${BASE_URL}/names/hosts?hostId=${hostId}`;
+  try {
+    const API_URL = `${BASE_URL}/names/hosts?hostId=${hostId}`;
 
-  const res = await axios.get(API_URL);
-  const props = res.data;
-
-  if (props === null) {
+    const res = await axios.get(API_URL);
+    const props = res.data;
     return {
-      notFound: true,
+      props: {
+        props,
+      },
+    };
+  } catch (error) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+      // 이거는 notFound 페이지를 띄우며, 다른 처리를 하지 않는다.
+      // notFound: true,
     };
   }
-  return {
-    props: {
-      props,
-    },
-  };
 };
