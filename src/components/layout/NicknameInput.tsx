@@ -1,4 +1,6 @@
+import { getNicknameCheck } from "@/apis/guest";
 import { inputReducer } from "@/types/Treducer";
+import { useRouter } from "next/router";
 import React, { useReducer } from "react";
 import { styled } from "twin.macro";
 
@@ -6,6 +8,28 @@ const NicknameInput = () => {
   const [data, dispatch] = useReducer(inputReducer, "");
   const onChangeData = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({ type: "CHANGE", payload: e.target.value });
+  };
+  const route = useRouter();
+  const onClick = async () => {
+    if (route.pathname === "/") {
+      let id: string | null = null;
+      if (typeof window !== "undefined") {
+        id = new URL(window.location.href).searchParams.get("hostId");
+      }
+      try {
+        const result = await getNicknameCheck({
+          hostId: id as string,
+          guestName: data,
+        });
+        if (result) {
+          route.replace(`/guestQuestion?hostId=${id}&nickname=${data}`);
+        }
+        dispatch({ type: "RESET" });
+      } catch (error) {
+        alert("닉네임이 중복됩니다");
+        dispatch({ type: "RESET" });
+      }
+    }
   };
   return (
     <>
@@ -17,7 +41,10 @@ const NicknameInput = () => {
         value={data}
       />
       <div className=" font-Neo text-text-gray text-xs">한글 최대 15자</div>
-      <button className=" w-32 h-9 bg-main-color rounded-2xl text-white font-Neo font-bold mt-[20px]">
+      <button
+        className=" w-32 h-9 bg-main-color rounded-2xl text-white font-Neo font-bold mt-[20px]"
+        onClick={onClick}
+      >
         시작하기
       </button>
     </>

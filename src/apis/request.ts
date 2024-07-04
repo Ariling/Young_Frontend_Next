@@ -52,7 +52,7 @@ async function request<T, R, P>({ uri, method, data, params }: IRequest<T, P>) {
 
   const response = await axiosInstance<T, AxiosResponse<IResponse<R>>>(config);
 
-  return response.data;
+  return response;
 }
 
 export default request;

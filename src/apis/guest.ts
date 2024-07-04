@@ -6,14 +6,13 @@ interface INicknameParam {
 }
 
 type TNicknameResponse = {
-  status: string;
   message: string;
   name: string;
 };
 
 export const getNicknameCheck = async (props: INicknameParam) => {
   const response = await request<null, TNicknameResponse, INicknameParam>({
-    uri: `/guestnames`,
+    uri: `/names/guests`,
     method: "get",
     params: {
       hostId: props.hostId,
