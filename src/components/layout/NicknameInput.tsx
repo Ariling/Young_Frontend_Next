@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import { inputReducer } from "@/types/Treducer";
+import React, { useReducer } from "react";
 import { styled } from "twin.macro";
 
 const NicknameInput = () => {
-  const [data, setData] = useState<string>("");
+  const [data, dispatch] = useReducer(inputReducer, "");
   const onChangeData = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setData(e.target.value);
+    dispatch({ type: "CHANGE", payload: e.target.value });
   };
   return (
     <>
