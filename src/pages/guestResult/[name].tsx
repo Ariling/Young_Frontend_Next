@@ -12,7 +12,7 @@ import { GetServerSideProps } from "next";
 import { TguestResult } from "@/types/Tguest";
 import { BASE_URL } from "@/config";
 import axios from "axios";
-import useGetImage from "@/query/useGetImage";
+import useGetImage from "@/query/get/useGetImage";
 import ShareBtnCompo from "@/components/guestResult/ShareBtnCompo";
 
 interface IProps {
