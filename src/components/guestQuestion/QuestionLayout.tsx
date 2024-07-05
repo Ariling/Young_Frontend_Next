@@ -1,10 +1,11 @@
-import React, { useReducer } from "react";
+import React, { useEffect, useReducer } from "react";
 import FaceQuestion from "./FaceQuestion";
 import EmojiQuestion from "./EmojiQuestion";
 import ColorQuestion from "./ColorQuestion";
 import FirstImpressionQuestion from "./FirstImpressionQuestion";
 import PresentImpressionQuestion from "./PresentImpressionQuestion";
 import { reducer } from "@/types/Treducer";
+import { useRouter } from "next/router";
 
 const QuestionLayout = () => {
   const [num, dispatch] = useReducer(reducer, 1);
@@ -17,6 +18,16 @@ const QuestionLayout = () => {
 
     return <PresentImpressionQuestion state={num} dispatch={dispatch} />;
   };
+  const route = useRouter();
+  useEffect(() => {
+    const id = route.query.hostId;
+    const guestName = route.query.nickname;
+    const hostName = route.query.hostname;
+    if (!id || !guestName || !hostName) {
+      alert("닉네임 설정 및 로그인을 진행해주세요");
+      route.back();
+    }
+  }, []);
   return (
     <main className="bg--layout flex flex-col items-center justify-center p-7">
       {getComponent(num)}

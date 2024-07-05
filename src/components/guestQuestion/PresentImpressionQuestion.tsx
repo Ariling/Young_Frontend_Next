@@ -5,11 +5,13 @@ import { presentImpressionArray } from "../utils/questionArray";
 import { QuestionBtn } from "@/styles/questionStyle";
 import { ReducerProps } from "@/types/Treducer";
 import { useQuestionStore } from "@/store/question";
-import Router from "next/router";
+import { useRouter } from "next/router";
 import SurveyImageCompo from "../utils/SurveyImageCompo";
+import useGetGuestRoute from "@/hooks/useGetGuestRoute";
 
 const PresentImpressionQuestion = (props: ReducerProps) => {
-  const testName = "루씨";
+  const route = useRouter();
+  const info = useGetGuestRoute();
   const changeQuestion = useQuestionStore.use.changeQuestion();
   // const questionArray = useQuestionStore.use.questionArray();
   // console.log(questionArray);
@@ -23,7 +25,9 @@ const PresentImpressionQuestion = (props: ReducerProps) => {
               key={e}
               onClick={() => {
                 changeQuestion(4, idx);
-                Router.replace("/guestLoading");
+                route.replace(
+                  `/guestLoading?hostId=${info.id}&nickname=${info.guestName}&hostname=${info.hostName}`
+                );
               }}
             >
               {e}
@@ -34,8 +38,8 @@ const PresentImpressionQuestion = (props: ReducerProps) => {
         <>
           지금 내가 생각하는
           <br />
-          {testName}
-          {useGetSuffix(testName, 5)}...
+          {info.hostName}
+          {useGetSuffix(info.hostName, 5)}...
         </>
       </QuestionContent>
     </>

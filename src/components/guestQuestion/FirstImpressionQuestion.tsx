@@ -6,9 +6,10 @@ import { useGetSuffix } from "@/hooks/useGetSuffix";
 import { useQuestionStore } from "@/store/question";
 import { ReducerProps } from "@/types/Treducer";
 import SurveyImageCompo from "../utils/SurveyImageCompo";
+import useGetGuestRoute from "@/hooks/useGetGuestRoute";
 
 const FirstImpressionQuestion = (props: ReducerProps) => {
-  const testName = "루씨";
+  const info = useGetGuestRoute();
   const changeQuestion = useQuestionStore.use.changeQuestion();
   return (
     <>
@@ -29,8 +30,8 @@ const FirstImpressionQuestion = (props: ReducerProps) => {
         })}
       >
         <>
-          {testName}
-          {useGetSuffix(testName, 4)}
+          {info.hostName}
+          {useGetSuffix(info.hostName, 4)}
           <br />
           처음 봤을 때
         </>
