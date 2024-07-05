@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import React, { useReducer } from "react";
 import { styled } from "twin.macro";
 
-const NicknameInput = () => {
+const NicknameInput = ({ hostName }: { hostName: string }) => {
   const [data, dispatch] = useReducer(inputReducer, "");
   const onChangeData = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({ type: "CHANGE", payload: e.target.value });
@@ -22,7 +22,9 @@ const NicknameInput = () => {
           guestName: data,
         });
         if (result) {
-          route.replace(`/guestQuestion?hostId=${id}&nickname=${data}`);
+          route.replace(
+            `/guestQuestion?hostId=${id}&nickname=${data}&hostname=${hostName}`
+          );
         }
         dispatch({ type: "RESET" });
       } catch (error) {

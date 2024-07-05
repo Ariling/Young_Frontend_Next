@@ -19,10 +19,19 @@ const KakaoLogin = () => {
         const data = await getLogin(code);
         if (data && typeof data === "object") {
           setUsesrInfo(data.data as IuserInfo);
+          const userInfo = useUserStore.getState().userInfo;
           setTimeout(() => {
             const pageRoute = localStorage.getItem("page");
             if (pageRoute === "/") {
-              route.replace("/guestQuestion");
+              route.replace(
+                `/guestQuestion?hostId=${localStorage.getItem(
+                  "hostId"
+                )}&nickname=${
+                  userInfo.hostName
+                }&hostname=${localStorage.getItem("hostName")}`
+              );
+              localStorage.removeItem("hostId");
+              localStorage.removeItem("hostName");
             } else {
               route.replace("/hostdeploy");
             }
@@ -30,11 +39,12 @@ const KakaoLogin = () => {
         }
       } catch (error) {
         if (axios.isAxiosError(error) && error.response) {
-          const data = error.response.status;
-          if (data === 404 || data === 400) {
-            route.replace("/signup");
+          const data = error.response;
+          if (data.status === 404) {
+            console.log(data.data.id);
+            route.replace(`/signup?id=${data.data.id}`);
           } else {
-            console.log("왜 에러가 뜰까..?", data);
+            console.log("왜 에러가 뜰까..?", data.data);
           }
         }
       }

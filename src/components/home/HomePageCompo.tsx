@@ -16,12 +16,12 @@ const HomePageCompo = ({ hostName }: { hostName: string }) => {
         {useGetSuffix(hostName, 1)}?
       </div>
       <div className="z-10 flex flex-col justify-center items-center gap-3">
-        <NicknameInput />
+        <NicknameInput hostName={hostName} />
       </div>
       <div className="text-text-gray text-xs z-10 mt-20 font-Neo mb-1.5">
         이미 공간을 만들었다면?
       </div>
-      <KakaoBtn />
+      <KakaoBtn hostName={hostName} />
     </>
   );
 };
