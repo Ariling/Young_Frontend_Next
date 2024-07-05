@@ -1,10 +1,8 @@
 import { UtilBtn } from "@/styles/buttonStyle";
 import React from "react";
-import Home from "@/svg/home.svg";
-import NicknameTitle from "../utils/NicknameTitle";
 import { useGetSuffix } from "@/hooks/useGetSuffix";
-import GuestResultLayout from "../layout/GuestResultLayout";
 import { useRouter } from "next/router";
+import ShareBtnCompo from "./ShareBtnCompo";
 
 const GuestResultCompo = ({
   nickname,
@@ -28,15 +26,7 @@ const GuestResultCompo = ({
           결과 보러 가기
         </UtilBtn>
       </div>
-      <div>
-        <div className="font-Neo text-center font-bold text-[#64422E] mt-[100px] text-base mb-3">
-          친구가 보는 내가 궁금하다면?
-        </div>
-        <UtilBtn isUrl={false} onClick={() => router.push("/login")}>
-          물어보러가기
-          <Home />
-        </UtilBtn>
-      </div>
+      <ShareBtnCompo />
     </>
   );
 };

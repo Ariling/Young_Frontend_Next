@@ -44,8 +44,8 @@ const Index = () => {
       now: "",
     },
   });
+  // resetArray는 나중에 가드 만들면서 하는게 좋을 듯!
   const questionArray = useQuestionStore.getState().questionArray;
-  const resetArray = useQuestionStore.use.resetQuestion();
   const { hostId, nickname: guestName } = router.query as {
     hostId: string;
     nickname: string;
@@ -70,7 +70,6 @@ const Index = () => {
         });
         const props = res.data;
         setProps(props);
-        resetArray();
       } catch (error) {
         router.replace("/login");
       }
