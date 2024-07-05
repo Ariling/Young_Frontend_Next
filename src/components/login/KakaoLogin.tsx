@@ -19,22 +19,8 @@ const KakaoLogin = () => {
         const data = await getLogin(code);
         if (data && typeof data === "object") {
           setUsesrInfo(data.data as IuserInfo);
-          const userInfo = useUserStore.getState().userInfo;
           setTimeout(() => {
-            const pageRoute = localStorage.getItem("page");
-            if (pageRoute === "/") {
-              route.replace(
-                `/guestQuestion?hostId=${localStorage.getItem(
-                  "hostId"
-                )}&nickname=${
-                  userInfo.hostName
-                }&hostname=${localStorage.getItem("hostName")}`
-              );
-              localStorage.removeItem("hostId");
-              localStorage.removeItem("hostName");
-            } else {
-              route.replace("/hostdeploy");
-            }
+            route.replace("/hostdeploy");
           }, 2000);
         }
       } catch (error) {
@@ -50,8 +36,6 @@ const KakaoLogin = () => {
       }
     };
     getData();
-    // 되든 안되든 삭제시키기
-    localStorage.removeItem("page");
   }, []);
   return (
     <LoadingCompo>

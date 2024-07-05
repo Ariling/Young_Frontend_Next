@@ -12,7 +12,7 @@ const index = () => {
       <div className="font-PartialSans text-[32px] z-10 text-center text-[#64422E] mb-10">
         친구들이 생각하는 나는?
       </div>
-      <KakaoBtn hostName="" />
+      <KakaoBtn />
     </main>
   );
 };

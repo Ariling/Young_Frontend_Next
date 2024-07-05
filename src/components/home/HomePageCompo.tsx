@@ -21,7 +21,7 @@ const HomePageCompo = ({ hostName }: { hostName: string }) => {
       <div className="text-text-gray text-xs z-10 mt-20 font-Neo mb-1.5">
         이미 공간을 만들었다면?
       </div>
-      <KakaoBtn hostName={hostName} />
+      <KakaoBtn />
     </>
   );
 };
