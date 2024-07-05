@@ -13,8 +13,7 @@ const PresentImpressionQuestion = (props: ReducerProps) => {
   const route = useRouter();
   const info = useGetGuestRoute();
   const changeQuestion = useQuestionStore.use.changeQuestion();
-  // const questionArray = useQuestionStore.use.questionArray();
-  // console.log(questionArray);
+  const questionArray = useQuestionStore.use.questionArray();
   return (
     <>
       <SurveyImageCompo />
@@ -25,7 +24,7 @@ const PresentImpressionQuestion = (props: ReducerProps) => {
               key={e}
               onClick={() => {
                 changeQuestion(4, idx);
-                route.replace(
+                route.push(
                   `/guestLoading?hostId=${info.id}&nickname=${info.guestName}&hostname=${info.hostName}`
                 );
               }}

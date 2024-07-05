@@ -7,6 +7,7 @@ type TQuestionStore = {
   questionImg: string;
   changeQuestion: (num: number, idx: number) => void;
   changeImage: (num: string, idx: number) => void;
+  resetQuestion: () => void;
 };
 
 function replaceCharAt(str: string, index: number, replacement: string) {
@@ -30,6 +31,11 @@ export const useQuestionStore = createSelectors(
         set((state) => ({
           questionImg: replaceCharAt(state.questionImg, idx, num),
         })),
+      resetQuestion: () => {
+        set({
+          questionArray: [0, 0, 0, 0, 0],
+        });
+      },
     }))
   )
 );

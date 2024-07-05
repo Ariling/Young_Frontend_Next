@@ -3,7 +3,6 @@ import { useQuery } from "@tanstack/react-query";
 import React from "react";
 
 export type TResultdata = {
-  guestName: string;
   image: string;
   title: string;
   first: string;
@@ -11,7 +10,6 @@ export type TResultdata = {
 };
 
 interface IResult {
-  status: number;
   message: string;
   hostId: string;
   hostName: string;

@@ -12,7 +12,7 @@ const Index = () => {
   const info = useGetGuestRoute();
   useEffect(() => {
     if (loading) {
-      route.replace(
+      route.push(
         `/guestResult?hostId=${info.id}&nickname=${info.guestName}&hostname=${info.hostName}`
       );
     }
