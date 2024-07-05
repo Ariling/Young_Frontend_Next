@@ -8,7 +8,7 @@ import axios from "axios";
 import { BASE_URL } from "@/config";
 import useGetImage from "@/query/get/useGetImage";
 import { useQuestionStore } from "@/store/question";
-import GuestResultCompo from "@/components/guestResult/guestResultCompo";
+import GuestResultCompo from "@/components/guestResult/GuestResultCompo";
 
 export type Tdata = {
   hostId: string;
