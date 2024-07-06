@@ -1,4 +1,6 @@
 import { getNicknameCheck } from "@/apis/guest";
+import { postSignup } from "@/apis/host";
+import { useUserStore } from "@/store/user";
 import { inputReducer } from "@/types/Treducer";
 import { useRouter } from "next/router";
 import React, { useReducer } from "react";
@@ -22,6 +24,32 @@ const NicknameInput = ({ hostName }: { hostName: string }) => {
           guestName: data,
         });
         if (result) {
+          route.replace(
+            `/guestQuestion?hostId=${id}&nickname=${data}&hostname=${hostName}`
+          );
+        }
+        dispatch({ type: "RESET" });
+      } catch (error) {
+        alert("닉네임이 중복됩니다");
+        dispatch({ type: "RESET" });
+      }
+    } else {
+      let id: string | null = null;
+      if (typeof window !== "undefined") {
+        id = new URL(window.location.href).searchParams.get("id");
+      }
+      try {
+        const result = await postSignup({
+          id: id as string,
+          name: data,
+        });
+        if (result) {
+          const setInfo = useUserStore.use.setInfo();
+          setInfo({
+            id: result.data.data.id,
+            hostName: result.data.data.name,
+            token: result.data.data.token,
+          });
           route.replace(
             `/guestQuestion?hostId=${id}&nickname=${data}&hostname=${hostName}`
           );
