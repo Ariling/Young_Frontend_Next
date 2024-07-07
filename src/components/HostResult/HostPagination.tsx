@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { useGetPageResult } from "@/apis/host";
 import { useHostResultStore } from "@/store/hostresult";
+import { useUserStore } from "@/store/user";
 
 const HostPagination = () => {
   const [pageNum, setPageNum] = useState(1);
@@ -16,6 +17,7 @@ const HostPagination = () => {
     queryFn: useGetPageResult,
   });
   const setData = useHostResultStore.use.setData();
+  const userInfo = useUserStore.getState().userInfo;
   useEffect(() => {
     setData(data?.data);
   }, [data]);
@@ -43,7 +45,11 @@ const HostPagination = () => {
                   <AnswerBox>
                     <ListText>
                       <File
-                        onClick={() => router.push(`/hostResult/${guest.name}`)}
+                        onClick={() =>
+                          router.push(
+                            `/hostResult/${guest.name}?host=${userInfo.hostName}`
+                          )
+                        }
                       />
                     </ListText>
                   </AnswerBox>

@@ -83,3 +83,14 @@ export const useGetPageResult = async () => {
 
   return response.data;
 };
+
+export const useGetStatistic = async () => {
+  const data = useUserStore.getState().userInfo;
+  const response = await axiosInstance.get(`/stats/${data.id}`, {
+    headers: {
+      Authorization: data.token,
+    },
+  });
+
+  return response.data;
+};

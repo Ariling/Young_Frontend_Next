@@ -8,11 +8,7 @@ import { useRouter } from "next/router";
 import Copy from "@/svg/copy.svg";
 import Download from "@/svg/download.svg";
 import Report from "@/svg/report-icon.svg";
-import File from "@/svg/file.svg";
-import React, { useState } from "react";
-import { WhiteBox } from "../hostResult/[nickname]";
-import { styled } from "twin.macro";
-import Pagination from "@/components/utils/Paginatioin";
+import React from "react";
 import {
   DehydratedState,
   HydrationBoundary,
@@ -68,7 +64,11 @@ const Index = ({ dehydratedState }: { dehydratedState: DehydratedState }) => {
                       </UtilBtn>
                       <UtilBtn
                         isUrl={false}
-                        onClick={() => router.push("/login")}
+                        onClick={() =>
+                          router.push(
+                            `/hostdeploy/hostStatistic?name=${hostName}`
+                          )
+                        }
                       >
                         질문별 통계 보러가기
                         <Report />
