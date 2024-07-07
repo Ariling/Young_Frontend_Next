@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import LoadingCompo from "../utils/LoadingCompo";
 import { Text } from "@/styles/questionStyle";
 import { getLogin } from "@/apis/host";
-import { IuserInfo, useUserStore } from "@/store/user";
+import { useUserStore } from "@/store/user";
 import axios from "axios";
 
 const KakaoLogin = () => {
@@ -18,9 +18,13 @@ const KakaoLogin = () => {
       try {
         const data = await getLogin(code);
         if (data && typeof data === "object") {
-          setUsesrInfo(data.data as IuserInfo);
+          setUsesrInfo({
+            id: data.data.id,
+            hostName: data.data.hostName,
+            token: data.data.token,
+          });
           setTimeout(() => {
-            route.replace("/hostdeploy");
+            route.replace(`/hostdeploy?name=${data.data.hostName}`);
           }, 2000);
         }
       } catch (error) {
