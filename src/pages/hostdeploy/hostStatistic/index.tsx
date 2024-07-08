@@ -4,7 +4,6 @@ import { useRouter } from "next/router";
 import Footer from "@/components/layout/Footer";
 import NicknameTitle from "@/components/utils/NicknameTitle";
 import { WhiteBox } from "@/pages/hostResult/[nickname]";
-import { useGetSuffix } from "@/hooks/useGetSuffix";
 import { Istatistics, Tstatistic } from "@/types/Tstatistic";
 import { css, styled } from "twin.macro";
 import {
@@ -22,22 +21,18 @@ import {
   useQuery,
 } from "@tanstack/react-query";
 import { useGetStatistic } from "@/apis/host";
+import useGetSuffixArray from "@/hooks/useGetSuffixArray";
 
 const Index = ({ dehydratedState }: { dehydratedState: DehydratedState }) => {
   const { data } = useQuery({
-    queryKey: ["host-result"],
+    queryKey: ["host-stats"],
     queryFn: useGetStatistic,
   });
   const router = useRouter();
   const hostNickname = decodeURIComponent(router.query.name as string);
   //이건 현재 테스트이기 때문에..
   const [testData, setTestData] = useState<Istatistics | null>(null);
-  const nameData = [
-    useGetSuffix(hostNickname, 1),
-    useGetSuffix(hostNickname, 2),
-    useGetSuffix(hostNickname, 3),
-    useGetSuffix(hostNickname, 4),
-  ];
+  const nameData = useGetSuffixArray(hostNickname);
   const QNAResult = ({
     children,
     result,
@@ -50,25 +45,29 @@ const Index = ({ dehydratedState }: { dehydratedState: DehydratedState }) => {
     return (
       <div className="mb-7">
         <div className=" text-base text-[#1c1c1c] mb-3">{children}</div>
-        {result.map((e) => {
-          return (
-            <>
-              <div className="mb-2" key={e.index}>
-                <div className="flex text-xs gap-3">
-                  <div className=" w-16">
-                    {e.index - 1 === -1 ? null : titleArray[e.index - 1]}
+        {result && Array.isArray(result) ? (
+          <>
+            {result.map((e) => {
+              return (
+                <>
+                  <div className="mb-2" key={e.index}>
+                    <div className="flex text-xs gap-3">
+                      <div className=" w-16">
+                        {e.index - 1 === -1 ? null : titleArray[e.index - 1]}
+                      </div>
+                      <PercentageBarContainer>
+                        <PercentageBar width={e.percent} />
+                      </PercentageBarContainer>
+                      <PercentageTextBox>
+                        <div className=" font-Neo text-xs">{e.percent}%</div>
+                      </PercentageTextBox>
+                    </div>
                   </div>
-                  <PercentageBarContainer>
-                    <PercentageBar width={e.percent} />
-                  </PercentageBarContainer>
-                  <PercentageTextBox>
-                    <div className=" font-Neo text-xs">{e.percent}%</div>
-                  </PercentageTextBox>
-                </div>
-              </div>
-            </>
-          );
-        })}
+                </>
+              );
+            })}
+          </>
+        ) : null}
       </div>
     );
   };

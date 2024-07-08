@@ -47,7 +47,7 @@ const HostPagination = () => {
                       <File
                         onClick={() =>
                           router.push(
-                            `/hostResult/${guest.name}?host=${userInfo.hostName}`
+                            `/hostResult/${guest.id}?name=${guest.name}&host=${userInfo.hostName}`
                           )
                         }
                       />

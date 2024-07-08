@@ -3,6 +3,8 @@ import axios from "axios";
 import request from "./request";
 import { useUserStore } from "@/store/user";
 import { useHostResultStore } from "@/store/hostresult";
+import { useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/router";
 
 export const getLogin = async (prop: string | null) => {
   const dataProp = {
@@ -72,14 +74,11 @@ export const useGetHostResult = async () => {
 export const useGetPageResult = async () => {
   const data = useUserStore.getState().userInfo;
   const page = useHostResultStore.getState().data;
-  const response = await axiosInstance.get(
-    `/guests/${data.id}?page=${page.page}`,
-    {
-      headers: {
-        Authorization: data.token,
-      },
-    }
-  );
+  const response = await axiosInstance.get(`/guests/${data.id}`, {
+    headers: {
+      Authorization: data.token,
+    },
+  });
 
   return response.data;
 };
@@ -92,5 +91,17 @@ export const useGetStatistic = async () => {
     },
   });
 
+  return response.data;
+};
+
+export const useGetHostGuestResult = async () => {
+  const router = useRouter();
+  const data = useUserStore.getState().userInfo;
+  const name = decodeURIComponent(router.query.name as string);
+  const response = await axiosInstance.get(`/data/${data.id}/${name}`, {
+    headers: {
+      Authorization: data.token,
+    },
+  });
   return response.data;
 };
