@@ -17,13 +17,18 @@ const HostPagination = () => {
     queryFn: useGetPageResult,
   });
   const setData = useHostResultStore.use.setData();
+  const setUser = useUserStore.use.setUser();
   const userInfo = useUserStore.getState().userInfo;
   useEffect(() => {
-    setData(data?.data);
+    setData({
+      guests: data?.guests,
+      page: data?.page,
+      total: data?.total,
+    });
   }, [data]);
   return (
     <>
-      {data && data.data.guests ? (
+      {data?.guests && Array.isArray(data?.guests) ? (
         <>
           <WhiteBox isStatistic className="mb-4">
             <TableHeaderContainer>
@@ -34,7 +39,7 @@ const HostPagination = () => {
                 <HeaderText>답변</HeaderText>
               </AnswerBox>
             </TableHeaderContainer>
-            {data.data.guests
+            {data.guests
               .reverse()
               .slice(pageNum * 6 - 6, pageNum * 6)
               .map((guest: { id: string; name: string }) => (
@@ -45,18 +50,19 @@ const HostPagination = () => {
                   <AnswerBox>
                     <ListText>
                       <File
-                        onClick={() =>
+                        onClick={() => {
+                          setUser(guest.id);
                           router.push(
                             `/hostResult/${guest.id}?name=${guest.name}&host=${userInfo.hostName}`
-                          )
-                        }
+                          );
+                        }}
                       />
                     </ListText>
                   </AnswerBox>
                 </TableListContainer>
               ))}
             <Pagination
-              totalPageNum={Math.ceil(data.data.total / 5)}
+              totalPageNum={Math.ceil(data.total / 5)}
               pageNum={pageNum}
               setPageNum={setPageNum}
             />

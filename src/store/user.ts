@@ -11,7 +11,9 @@ export interface IuserInfo {
 
 type TUserStore = {
   userInfo: IuserInfo;
+  userGuest: string;
   setInfo: (prev: SetStateAction<IuserInfo>) => void;
+  setUser: (name: string) => void;
   resetInfo: () => void;
 };
 
@@ -29,6 +31,7 @@ export const useUserStore = createSelectors(
           hostName: "",
           token: "",
         },
+        userGuest: "",
         setInfo: (prev: SetStateAction<IuserInfo>) => {
           prev instanceof Function
             ? set((state) => ({ userInfo: prev(state.userInfo) }))
@@ -41,6 +44,11 @@ export const useUserStore = createSelectors(
               hostName: "",
               token: "",
             },
+          });
+        },
+        setUser: (name: string) => {
+          set({
+            userGuest: name,
           });
         },
       }),
