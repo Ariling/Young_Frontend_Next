@@ -6,11 +6,41 @@ import Right from "@/svg/arrow-right.svg";
 import { useRouter } from "next/router";
 import React, { ReactNode } from "react";
 import { css, styled } from "twin.macro";
+import { useQuery } from "@tanstack/react-query";
+import { useGetHostGuestResult } from "@/apis/host";
+import useGetSuffixArray from "@/hooks/useGetSuffixArray";
+import {
+  ColorArray,
+  EmojiArray,
+  FaceArray,
+  firstImpressionArray,
+  presentImpressionArray,
+} from "@/components/utils/questionArray";
+import { useUserStore } from "@/store/user";
 
 const Index = () => {
   const router = useRouter();
-  const otherGuestName = (router.query.nickname as string) || "";
-  const hostNickname = "지우";
+  const guestId = router.query.nickname as string;
+  const guestName = decodeURIComponent(router.query.name as string);
+  const hostNickname = decodeURIComponent(router.query.host as string) || "";
+  const guestSuffixArray = useGetSuffixArray(guestName);
+  const hostSuffixArray = useGetSuffixArray(hostNickname);
+  const resetInfo = useUserStore.use.resetInfo();
+  const { data, error } = useQuery({
+    queryKey: ["host-guest-result", guestId],
+    queryFn: useGetHostGuestResult,
+  });
+  if (error) {
+    alert("로그인을 진행해주세요");
+    resetInfo();
+    router.replace("/login");
+  } else if (
+    data &&
+    (data.message === "Bad Request" || data.message === "User Not Allowed")
+  ) {
+    alert("잘못된 접근입니다.");
+    router.back();
+  }
   const QNAResult = ({
     children,
     result,
@@ -35,46 +65,50 @@ const Index = () => {
           <div className="flex justify-start mb-9">
             <Back onClick={() => router.back()} />
           </div>
-          <div className="flex flex-col items-center">
-            <NicknameTitle>
-              {otherGuestName}
-              {useGetSuffix(otherGuestName, 2)} 생각하는 {hostNickname}
-              {useGetSuffix(hostNickname, 1)}?
-            </NicknameTitle>
-            <WhiteBox className=" font-Neo" isStatistic={false}>
-              <QNAResult result={"강아지상"}>
-                <>
-                  {hostNickname}
-                  {useGetSuffix(hostNickname, 1)} OO상이야
-                </>
-              </QNAResult>
-              <QNAResult result={"강아지상"}>
-                <>
-                  {hostNickname}
-                  {useGetSuffix(hostNickname, 2)} 이모지라면
-                </>
-              </QNAResult>
-              <QNAResult result={"강아지상"}>
-                <>
-                  {hostNickname}
-                  {useGetSuffix(hostNickname, 3)} 어울리는 색은...
-                </>
-              </QNAResult>
-              <QNAResult result={"강아지상"}>
-                <>
-                  {hostNickname}
-                  {useGetSuffix(hostNickname, 4)} 처음 봤을 때...
-                </>
-              </QNAResult>
-              <QNAResult result={"강아지상"}>
-                <>
-                  지금 내가 생각하는
-                  {hostNickname}
-                  {useGetSuffix(hostNickname, 1)}..
-                </>
-              </QNAResult>
-            </WhiteBox>
-          </div>
+          {data && data.data ? (
+            <>
+              <div className="flex flex-col items-center">
+                <NicknameTitle>
+                  {guestName}
+                  {guestSuffixArray[1]} 생각하는 {hostNickname}
+                  {hostSuffixArray[0]}?
+                </NicknameTitle>
+                <WhiteBox className=" font-Neo" isStatistic={false}>
+                  <QNAResult result={FaceArray[data.data.animal - 1]}>
+                    <>
+                      {hostNickname}
+                      {hostSuffixArray[0]} OO상이야
+                    </>
+                  </QNAResult>
+                  <QNAResult result={EmojiArray[data.data.emoji - 1]}>
+                    <>
+                      {hostNickname}
+                      {hostSuffixArray[1]} 이모지라면
+                    </>
+                  </QNAResult>
+                  <QNAResult result={ColorArray[data.data.color - 1]}>
+                    <>
+                      {hostNickname}
+                      {hostSuffixArray[2]} 어울리는 색은...
+                    </>
+                  </QNAResult>
+                  <QNAResult result={firstImpressionArray[data.data.first - 1]}>
+                    <>
+                      {hostNickname}
+                      {hostSuffixArray[3]} 처음 봤을 때...
+                    </>
+                  </QNAResult>
+                  <QNAResult result={presentImpressionArray[data.data.now - 1]}>
+                    <>
+                      지금 내가 생각하는
+                      {hostNickname}
+                      {hostSuffixArray[0]}..
+                    </>
+                  </QNAResult>
+                </WhiteBox>
+              </div>
+            </>
+          ) : null}
         </div>
         <Footer />
       </main>

@@ -6,15 +6,16 @@ import { FaceArray } from "../utils/questionArray";
 import QuestionContent from "../layout/QuestionContent";
 import { useQuestionStore } from "@/store/question";
 import { ReducerProps } from "@/types/Treducer";
+import SurveyImageCompo from "../utils/SurveyImageCompo";
+import useGetGuestRoute from "@/hooks/useGetGuestRoute";
 
 const FaceQuestion = (props: ReducerProps) => {
-  const testSrc =
-    "https://cdn.pixabay.com/photo/2015/06/19/21/24/avenue-815297_1280.jpg";
-  const testName = "루씨";
+  const info = useGetGuestRoute();
   const changeQuestion = useQuestionStore.use.changeQuestion();
+  const changeImgCode = useQuestionStore.use.changeImage();
   return (
     <>
-      <GuestImage src={testSrc} />
+      <SurveyImageCompo />
       <QuestionContent
         children2={FaceArray.map((e, idx) => {
           return (
@@ -22,6 +23,7 @@ const FaceQuestion = (props: ReducerProps) => {
               key={e}
               onClick={() => {
                 changeQuestion(0, idx);
+                changeImgCode(String(idx + 1), 2);
                 props.dispatch({ type: "PLUS" });
               }}
             >
@@ -31,8 +33,8 @@ const FaceQuestion = (props: ReducerProps) => {
         })}
       >
         <>
-          {testName}
-          {useGetSuffix(testName, 1)}
+          {info.hostName}
+          {useGetSuffix(info.hostName, 1)}
           <br />
           00상이야!{" "}
         </>

@@ -1,29 +1,58 @@
-import Image from "next/image";
-import { Inter } from "next/font/google";
-import tw, { css, styled } from "twin.macro";
-import { useState } from "react";
-import BG from "../images/BG.png";
-import KakaoBtn from "@/components/utils/KakaoBtn";
-import NicknameInput from "@/components/layout/NicknameInput";
+import { GetServerSideProps } from "next";
+import { BASE_URL } from "@/config";
+import axios from "axios";
+import HomePageCompo from "@/components/home/HomePageCompo";
 
-export default function Home() {
+interface IProps {
+  props: TProps;
+}
+
+type TProps = {
+  hostName: string;
+  message: string;
+};
+
+export default function Home({ props }: IProps) {
   return (
     <main
       className={`flex flex-col items-center justify-center p-7 w-full min-h-screen`}
     >
-      <Image src={BG} alt="백그라운드 사진" className="img--layout" />
-      <div className="font-PartialSans text-[32px] z-10 text-center text-[#64422E] mb-16">
-        내가 생각하는
-        <br />
-        nickname은?
-      </div>
-      <div className="z-10 flex flex-col justify-center items-center gap-3">
-        <NicknameInput />
-      </div>
-      <div className="text-text-gray text-xs z-10 mt-20 font-Neo mb-1.5">
-        이미 공간을 만들었다면?
-      </div>
-      <KakaoBtn />
+      <HomePageCompo hostName={props.hostName} />
     </main>
   );
 }
+
+export const getServerSideProps: GetServerSideProps<{ props: TProps }> = async (
+  context
+) => {
+  // 이럴 땐 query를 해야한다. params는 /뒤에 해당하는거라고 보면 된다. [hostId].tsx 이런식으로!
+  const hostId = context.query.hostId as string | undefined;
+  if (!hostId || hostId === "") {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
+  }
+  try {
+    const API_URL = `${BASE_URL}/names/hosts?hostId=${hostId}`;
+
+    const res = await axios.get(API_URL);
+    const props = res.data;
+    return {
+      props: {
+        props,
+      },
+    };
+  } catch (error) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+      // 이거는 notFound 페이지를 띄우며, 다른 처리를 하지 않는다.
+      // notFound: true,
+    };
+  }
+};

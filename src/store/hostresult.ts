@@ -5,11 +5,9 @@ import { SetStateAction } from "react";
 
 // data 및 testData를 위해서 export로 처리
 export interface Idata {
-  image: string;
-  title?: string;
-  first?: string;
-  now?: string;
-  guests?: Array<Iguests>;
+  guests: Array<Iguests>;
+  page: number;
+  total: number;
 }
 
 interface Iguests {
@@ -26,7 +24,9 @@ export const useHostResultStore = createSelectors(
   create<ThostResultStore>()(
     devtools((set) => ({
       data: {
-        image: "000",
+        guests: [],
+        page: 1,
+        total: 0,
       },
       // 이래야 functional update가 가능하다고 한다.
       setData: (prev: SetStateAction<Idata>) => {

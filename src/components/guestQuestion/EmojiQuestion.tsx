@@ -1,20 +1,20 @@
 import React from "react";
-import GuestImage from "../utils/GuestImage";
 import QuestionContent from "../layout/QuestionContent";
 import { EmojiArray } from "../utils/questionArray";
 import { QuestionBtn } from "@/styles/questionStyle";
 import { useGetSuffix } from "@/hooks/useGetSuffix";
 import { ReducerProps } from "@/types/Treducer";
 import { useQuestionStore } from "@/store/question";
+import SurveyImageCompo from "../utils/SurveyImageCompo";
+import useGetGuestRoute from "@/hooks/useGetGuestRoute";
 
 const EmojiQuestion = (props: ReducerProps) => {
-  const testSrc =
-    "https://cdn.pixabay.com/photo/2015/06/19/21/24/avenue-815297_1280.jpg";
-  const testName = "루씨";
+  const info = useGetGuestRoute();
   const changeQuestion = useQuestionStore.use.changeQuestion();
+  const changeImgCode = useQuestionStore.use.changeImage();
   return (
     <>
-      <GuestImage src={testSrc} />
+      <SurveyImageCompo />
       <QuestionContent
         children2={EmojiArray.map((e, idx) => {
           return (
@@ -22,6 +22,7 @@ const EmojiQuestion = (props: ReducerProps) => {
               key={e}
               onClick={() => {
                 changeQuestion(1, idx);
+                changeImgCode(String(idx + 1), 1);
                 props.dispatch({ type: "PLUS" });
               }}
             >
@@ -31,8 +32,8 @@ const EmojiQuestion = (props: ReducerProps) => {
         })}
       >
         <>
-          {testName}
-          {useGetSuffix(testName, 2)}
+          {info.hostName}
+          {useGetSuffix(info.hostName, 2)}
           <br />
           이모지라면
         </>

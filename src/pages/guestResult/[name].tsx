@@ -8,13 +8,23 @@ import { UtilBtn } from "@/styles/buttonStyle";
 import Footer from "@/components/layout/Footer";
 import GuestResultLayout from "@/components/layout/GuestResultLayout";
 import NicknameTitle from "@/components/utils/NicknameTitle";
+import { GetServerSideProps } from "next";
+import { TguestResult } from "@/types/Tguest";
+import { BASE_URL } from "@/config";
+import axios from "axios";
+import useGetImage from "@/query/get/useGetImage";
+import ShareBtnCompo from "@/components/guestResult/ShareBtnCompo";
 
-const OtherGuestPage = () => {
+interface IProps {
+  props: TguestResult;
+}
+
+const OtherGuestPage = ({ props }: IProps) => {
   //여기서 SSR로 활용할 예정
   const router = useRouter();
-  const testSrc =
-    "https://cdn.pixabay.com/photo/2015/06/19/21/24/avenue-815297_1280.jpg";
-  const otherGuestName = (router.query.name as string) || "";
+  const imageCode = props.data.image;
+  const { imgUrl } = useGetImage(imageCode);
+  const nickname = props.hostName;
   return (
     <>
       <main className="bg--layout">
@@ -24,24 +34,16 @@ const OtherGuestPage = () => {
           </div>
           <div className="flex flex-col items-center">
             <NicknameTitle>
-              다른 친구들이 생각하는 {otherGuestName}
-              {useGetSuffix(otherGuestName, 1)}?
+              다른 친구들이 생각하는 {nickname}
+              {useGetSuffix(nickname, 1)}?
             </NicknameTitle>
             <GuestResultLayout
-              imgsrc={testSrc}
-              title={testGuestResult.title}
-              first={testGuestResult.first}
-              now={testGuestResult.now}
+              imgsrc={imgUrl}
+              title={props.data.title}
+              first={props.data.first}
+              now={props.data.now}
             />
-            <div>
-              <div className="font-Neo text-center font-bold text-[#64422E] mt-[100px] text-base mb-3">
-                친구가 보는 내가 궁금하다면?
-              </div>
-              <UtilBtn isUrl={false} onClick={() => router.push("/login")}>
-                물어보러가기
-                <Home />
-              </UtilBtn>
-            </div>
+            <ShareBtnCompo />
           </div>
         </div>
         <Footer />
@@ -51,3 +53,25 @@ const OtherGuestPage = () => {
 };
 
 export default OtherGuestPage;
+
+export const getServerSideProps: GetServerSideProps<{
+  props: TguestResult;
+}> = async (context) => {
+  const hostId = context.params?.name as string;
+
+  try {
+    const API_URL = `${BASE_URL}/results/${hostId}`;
+
+    const res = await axios.get(API_URL);
+    const props = res.data;
+    return {
+      props: {
+        props,
+      },
+    };
+  } catch (error) {
+    return {
+      notFound: true,
+    };
+  }
+};
