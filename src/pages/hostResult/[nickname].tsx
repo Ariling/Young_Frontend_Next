@@ -24,10 +24,20 @@ const Index = () => {
   const hostNickname = decodeURIComponent(router.query.host as string) || "";
   const guestSuffixArray = useGetSuffixArray(guestName);
   const hostSuffixArray = useGetSuffixArray(hostNickname);
-  const { data } = useQuery({
+  const { data, error } = useQuery({
     queryKey: ["host-guest-result", guestId],
     queryFn: useGetHostGuestResult,
   });
+  if (error) {
+    alert("로그인을 진행해주세요");
+    router.replace("/login");
+  } else if (
+    data &&
+    (data.message === "Bad Request" || data.message === "User Not Allowed")
+  ) {
+    alert("잘못된 접근입니다.");
+    router.replace("/login");
+  }
   const QNAResult = ({
     children,
     result,

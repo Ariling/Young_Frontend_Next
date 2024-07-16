@@ -24,11 +24,21 @@ import { useGetStatistic } from "@/apis/host";
 import useGetSuffixArray from "@/hooks/useGetSuffixArray";
 
 const Index = ({ dehydratedState }: { dehydratedState: DehydratedState }) => {
-  const { data } = useQuery({
+  const { data, error } = useQuery({
     queryKey: ["host-stats"],
     queryFn: useGetStatistic,
   });
   const router = useRouter();
+  if (error) {
+    alert("로그인을 진행해주세요");
+    router.replace("/login");
+  } else if (
+    data &&
+    (data.message === "Bad Request" || data.message === "User Not Allowed")
+  ) {
+    alert("잘못된 접근입니다.");
+    router.replace("/login");
+  }
   const hostNickname = decodeURIComponent(router.query.name as string);
   //이건 현재 테스트이기 때문에..
   const [testData, setTestData] = useState<Istatistics | null>(null);
@@ -75,6 +85,8 @@ const Index = ({ dehydratedState }: { dehydratedState: DehydratedState }) => {
   useEffect(() => {
     if (data && data.data) {
       setTestData(data.data);
+    } else if (error) {
+      console.log(error);
     }
   }, [data]);
   return (

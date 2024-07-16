@@ -19,17 +19,29 @@ import {
 import { useGetHostResult } from "@/apis/host";
 import useGetImage from "@/query/get/useGetImage";
 import HostPagination from "@/components/HostResult/HostPagination";
+import { useUserStore } from "@/store/user";
 
 const Index = ({ dehydratedState }: { dehydratedState: DehydratedState }) => {
-  const { data } = useQuery({
+  const { data, error } = useQuery({
     queryKey: ["host-result"],
     queryFn: useGetHostResult,
+    retry: false,
   });
   const router = useRouter();
   // 일단 되는지 테스트..
   const image = data?.data.image ?? "000";
   const hostName = decodeURIComponent(router.query.name as string);
   const { imgUrl } = useGetImage(image);
+  if (error) {
+    alert("로그인을 진행해주세요");
+    router.replace("/login");
+  } else if (
+    data &&
+    (data.message === "Bad Request" || data.message === "User Not Allowed")
+  ) {
+    alert("잘못된 접근입니다.");
+    router.replace("/login");
+  }
   return (
     <HydrationBoundary state={dehydratedState}>
       <>
