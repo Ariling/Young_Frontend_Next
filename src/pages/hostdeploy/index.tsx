@@ -32,15 +32,17 @@ const Index = ({ dehydratedState }: { dehydratedState: DehydratedState }) => {
   const image = data?.data.image ?? "000";
   const hostName = decodeURIComponent(router.query.name as string);
   const { imgUrl } = useGetImage(image);
+  const resetInfo = useUserStore.use.resetInfo();
   if (error) {
     alert("로그인을 진행해주세요");
+    resetInfo();
     router.replace("/login");
   } else if (
     data &&
     (data.message === "Bad Request" || data.message === "User Not Allowed")
   ) {
     alert("잘못된 접근입니다.");
-    router.replace("/login");
+    router.back();
   }
   return (
     <HydrationBoundary state={dehydratedState}>

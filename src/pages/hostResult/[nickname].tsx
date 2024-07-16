@@ -16,6 +16,7 @@ import {
   firstImpressionArray,
   presentImpressionArray,
 } from "@/components/utils/questionArray";
+import { useUserStore } from "@/store/user";
 
 const Index = () => {
   const router = useRouter();
@@ -24,19 +25,21 @@ const Index = () => {
   const hostNickname = decodeURIComponent(router.query.host as string) || "";
   const guestSuffixArray = useGetSuffixArray(guestName);
   const hostSuffixArray = useGetSuffixArray(hostNickname);
+  const resetInfo = useUserStore.use.resetInfo();
   const { data, error } = useQuery({
     queryKey: ["host-guest-result", guestId],
     queryFn: useGetHostGuestResult,
   });
   if (error) {
     alert("로그인을 진행해주세요");
+    resetInfo();
     router.replace("/login");
   } else if (
     data &&
     (data.message === "Bad Request" || data.message === "User Not Allowed")
   ) {
     alert("잘못된 접근입니다.");
-    router.replace("/login");
+    router.back();
   }
   const QNAResult = ({
     children,

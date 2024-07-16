@@ -22,8 +22,10 @@ import {
 } from "@tanstack/react-query";
 import { useGetStatistic } from "@/apis/host";
 import useGetSuffixArray from "@/hooks/useGetSuffixArray";
+import { useUserStore } from "@/store/user";
 
 const Index = ({ dehydratedState }: { dehydratedState: DehydratedState }) => {
+  const resetInfo = useUserStore.use.resetInfo();
   const { data, error } = useQuery({
     queryKey: ["host-stats"],
     queryFn: useGetStatistic,
@@ -31,13 +33,14 @@ const Index = ({ dehydratedState }: { dehydratedState: DehydratedState }) => {
   const router = useRouter();
   if (error) {
     alert("로그인을 진행해주세요");
+    resetInfo();
     router.replace("/login");
   } else if (
     data &&
     (data.message === "Bad Request" || data.message === "User Not Allowed")
   ) {
     alert("잘못된 접근입니다.");
-    router.replace("/login");
+    router.back();
   }
   const hostNickname = decodeURIComponent(router.query.name as string);
   //이건 현재 테스트이기 때문에..
