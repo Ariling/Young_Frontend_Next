@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef, useRef } from "react";
 import GuestImage from "../utils/GuestImage";
 
 interface ILayout {
@@ -8,10 +8,10 @@ interface ILayout {
   now: string;
 }
 
-const GuestResultLayout = (props: ILayout) => {
+const GuestResultLayout = forwardRef<HTMLDivElement, ILayout>((props, ref) => {
   return (
     <>
-      <div className="mb-8">
+      <div className="mb-8" ref={ref}>
         <GuestImage src={props.imgsrc} />
       </div>
       <div className="flex flex-col items-center text-center gap-6 px-3 font-Neo font-bold">
@@ -21,6 +21,8 @@ const GuestResultLayout = (props: ILayout) => {
       </div>
     </>
   );
-};
+});
+
+GuestResultLayout.displayName = "GuestResultLayout";
 
 export default GuestResultLayout;

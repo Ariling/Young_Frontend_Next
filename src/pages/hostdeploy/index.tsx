@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import Copy from "@/svg/copy.svg";
 import Download from "@/svg/download.svg";
 import Report from "@/svg/report-icon.svg";
-import React from "react";
+import React, { useCallback, useRef, useState } from "react";
 import {
   DehydratedState,
   HydrationBoundary,
@@ -20,6 +20,8 @@ import { useGetHostResult } from "@/apis/host";
 import useGetImage from "@/query/get/useGetImage";
 import HostPagination from "@/components/HostResult/HostPagination";
 import { useUserStore } from "@/store/user";
+import html2canvas from "html2canvas";
+import saveAs from "file-saver";
 
 const Index = ({ dehydratedState }: { dehydratedState: DehydratedState }) => {
   const { data, error } = useQuery({
@@ -44,6 +46,22 @@ const Index = ({ dehydratedState }: { dehydratedState: DehydratedState }) => {
     alert("잘못된 접근입니다.");
     router.back();
   }
+  const divRef = useRef<HTMLDivElement>(null);
+
+  const handleDownload = async () => {
+    if (!divRef.current) return;
+
+    try {
+      const canvas = await html2canvas(divRef.current, { scale: 2 });
+      canvas.toBlob((blob) => {
+        if (blob !== null) {
+          saveAs(blob, "result.png");
+        }
+      });
+    } catch (error) {
+      console.error("Error converting div to image:", error);
+    }
+  };
   return (
     <HydrationBoundary state={dehydratedState}>
       <>
@@ -67,12 +85,10 @@ const Index = ({ dehydratedState }: { dehydratedState: DehydratedState }) => {
                       title={data.data.title}
                       first={data.data.first}
                       now={data.data.now}
+                      ref={divRef}
                     />
                     <div className="mt-4 flex flex-col gap-5 mb-28">
-                      <UtilBtn
-                        isUrl={false}
-                        onClick={() => router.push("/login")}
-                      >
+                      <UtilBtn isUrl={false} onClick={handleDownload}>
                         이미지 다운로드
                         <Download />
                       </UtilBtn>
