@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import Copy from "@/svg/copy.svg";
 import Download from "@/svg/download.svg";
 import Report from "@/svg/report-icon.svg";
-import React, { useCallback, useRef, useState } from "react";
+import React, { useRef } from "react";
 import {
   DehydratedState,
   HydrationBoundary,
@@ -22,6 +22,7 @@ import HostPagination from "@/components/HostResult/HostPagination";
 import { useUserStore } from "@/store/user";
 import html2canvas from "html2canvas";
 import saveAs from "file-saver";
+import KakaoShareBtn from "@/components/utils/KakaoShareBtn";
 
 const Index = ({ dehydratedState }: { dehydratedState: DehydratedState }) => {
   const { data, error } = useQuery({
@@ -114,13 +115,7 @@ const Index = ({ dehydratedState }: { dehydratedState: DehydratedState }) => {
                       <div className="font-Neo text-center font-bold text-[#64422E] text-base mb-3">
                         친구에게 공유하고 내 이미지를 알아보세요!
                       </div>
-                      <UtilBtn
-                        isUrl={true}
-                        onClick={() => router.push("/login")}
-                      >
-                        물어보러가기
-                        <Copy />
-                      </UtilBtn>
+                      <KakaoShareBtn />
                     </div>
                   </>
                 ) : (

@@ -7,7 +7,8 @@ interface ILayout {
   first: string;
   now: string;
 }
-
+// 이렇게 ref를 지정해서 하면 다른 컴포를 건드리지 않고도 ref를 전달받을 수 있다.
+// 꼭 display를 처리해야되는데 그러지 않으면 export가 제대로 되지 않는다.
 const GuestResultLayout = forwardRef<HTMLDivElement, ILayout>((props, ref) => {
   return (
     <>
