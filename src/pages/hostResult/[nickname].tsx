@@ -1,6 +1,4 @@
 import Footer from "@/components/layout/Footer";
-import NicknameTitle from "@/components/utils/NicknameTitle";
-import Back from "@/svg/back.svg";
 import { useRouter } from "next/router";
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
@@ -15,6 +13,7 @@ import {
 } from "@/constants/questionArray";
 import { useUserStore } from "@/store/user";
 import HostResultForm from "@/components/HostResult/HostResultForm";
+import BackCompo from "@/components/utils/BackCompo";
 
 const Index = () => {
   const router = useRouter();
@@ -51,9 +50,7 @@ const Index = () => {
     <>
       <main className="bg--layout">
         <div className="flex flex-col justify-center p-7 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mb-20">
-          <div className="flex justify-start mb-9">
-            <Back onClick={() => router.back()} />
-          </div>
+          <BackCompo />
           {data && data.data ? (
             <>
               <div className="flex flex-col items-center">
