@@ -1,7 +1,7 @@
 import React from "react";
 import QuestionContent from "../layout/QuestionContent";
 import { QuestionBtn } from "@/styles/questionStyle";
-import { ColorArray, ColorObject } from "../utils/questionArray";
+import { ColorArray, ColorObject } from "../../constants/questionArray";
 import { useGetSuffix } from "@/hooks/useGetSuffix";
 import { ReducerProps } from "@/types/Treducer";
 import { useQuestionStore } from "@/store/question";

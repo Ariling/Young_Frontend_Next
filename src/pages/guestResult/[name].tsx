@@ -1,10 +1,7 @@
 import { useRouter } from "next/router";
 import Back from "@/svg/back.svg";
-import Home from "@/svg/home.svg";
 import React from "react";
 import { useGetSuffix } from "@/hooks/useGetSuffix";
-import { testGuestResult } from "@/components/utils/testData";
-import { UtilBtn } from "@/styles/buttonStyle";
 import Footer from "@/components/layout/Footer";
 import GuestResultLayout from "@/components/layout/GuestResultLayout";
 import NicknameTitle from "@/components/utils/NicknameTitle";
@@ -20,7 +17,6 @@ interface IProps {
 }
 
 const OtherGuestPage = ({ props }: IProps) => {
-  //여기서 SSR로 활용할 예정
   const router = useRouter();
   const imageCode = props.data.image;
   const { imgUrl } = useGetImage(imageCode);

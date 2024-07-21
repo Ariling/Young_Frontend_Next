@@ -1,6 +1,6 @@
 import React from "react";
 import QuestionContent from "../layout/QuestionContent";
-import { EmojiArray } from "../utils/questionArray";
+import { EmojiArray } from "../../constants/questionArray";
 import { QuestionBtn } from "@/styles/questionStyle";
 import { useGetSuffix } from "@/hooks/useGetSuffix";
 import { ReducerProps } from "@/types/Treducer";

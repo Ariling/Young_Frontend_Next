@@ -7,13 +7,6 @@ import { WhiteBox } from "@/pages/hostResult/[nickname]";
 import { Istatistics, Tstatistic } from "@/types/Tstatistic";
 import { css, styled } from "twin.macro";
 import {
-  ColorArray,
-  EmojiArray,
-  FaceArray,
-  firstImpressionArray,
-  presentImpressionArray,
-} from "@/components/utils/questionArray";
-import {
   DehydratedState,
   HydrationBoundary,
   QueryClient,
@@ -23,6 +16,13 @@ import {
 import { useGetStatistic } from "@/apis/host";
 import useGetSuffixArray from "@/hooks/useGetSuffixArray";
 import { useUserStore } from "@/store/user";
+import {
+  ColorArray,
+  EmojiArray,
+  FaceArray,
+  firstImpressionArray,
+  presentImpressionArray,
+} from "@/constants/questionArray";
 
 const Index = ({ dehydratedState }: { dehydratedState: DehydratedState }) => {
   const resetInfo = useUserStore.use.resetInfo();

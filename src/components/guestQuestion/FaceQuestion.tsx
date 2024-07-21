@@ -2,7 +2,7 @@ import React from "react";
 import GuestImage from "../utils/GuestImage";
 import { QuestionBtn } from "@/styles/questionStyle";
 import { useGetSuffix } from "@/hooks/useGetSuffix";
-import { FaceArray } from "../utils/questionArray";
+import { FaceArray } from "../../constants/questionArray";
 import QuestionContent from "../layout/QuestionContent";
 import { useQuestionStore } from "@/store/question";
 import { ReducerProps } from "@/types/Treducer";

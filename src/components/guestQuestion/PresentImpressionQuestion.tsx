@@ -1,7 +1,7 @@
 import { useGetSuffix } from "@/hooks/useGetSuffix";
 import React from "react";
 import QuestionContent from "../layout/QuestionContent";
-import { presentImpressionArray } from "../utils/questionArray";
+import { presentImpressionArray } from "../../constants/questionArray";
 import { QuestionBtn } from "@/styles/questionStyle";
 import { ReducerProps } from "@/types/Treducer";
 import { useQuestionStore } from "@/store/question";

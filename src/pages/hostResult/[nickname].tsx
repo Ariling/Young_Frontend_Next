@@ -15,7 +15,7 @@ import {
   FaceArray,
   firstImpressionArray,
   presentImpressionArray,
-} from "@/components/utils/questionArray";
+} from "@/constants/questionArray";
 import { useUserStore } from "@/store/user";
 
 const Index = () => {
