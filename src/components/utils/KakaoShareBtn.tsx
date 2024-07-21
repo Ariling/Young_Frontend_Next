@@ -55,10 +55,17 @@ const KakaoShareBtn = () => {
   };
 
   return (
-    <UtilBtn id="kakaotalk-sharing-btn" isUrl={true} onClick={shareKaKao}>
-      물어보러가기
-      <Copy />
-    </UtilBtn>
+    <>
+      <div>
+        <div className="font-Neo text-center font-bold text-[#64422E] text-base mb-3">
+          친구에게 공유하고 내 이미지를 알아보세요!
+        </div>
+        <UtilBtn id="kakaotalk-sharing-btn" isUrl={true} onClick={shareKaKao}>
+          물어보러가기
+          <Copy />
+        </UtilBtn>
+      </div>
+    </>
   );
 };
 

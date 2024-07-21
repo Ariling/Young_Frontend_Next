@@ -11,8 +11,8 @@ interface ILayout {
 // 꼭 display를 처리해야되는데 그러지 않으면 export가 제대로 되지 않는다.
 const GuestResultLayout = forwardRef<HTMLDivElement, ILayout>((props, ref) => {
   return (
-    <>
-      <div className="mb-8" ref={ref}>
+    <div ref={ref} className="py-2">
+      <div className="mb-8 flex justify-center">
         <GuestImage src={props.imgsrc} />
       </div>
       <div className="flex flex-col items-center text-center gap-6 px-3 font-Neo font-bold">
@@ -20,7 +20,7 @@ const GuestResultLayout = forwardRef<HTMLDivElement, ILayout>((props, ref) => {
         <div className=" text-sm text-[#555555]">{props.first}</div>
         <div className="text-sm text-[#555555]">{props.now}</div>
       </div>
-    </>
+    </div>
   );
 });
 

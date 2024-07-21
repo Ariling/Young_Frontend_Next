@@ -1,13 +1,7 @@
-import Footer from "@/components/layout/Footer";
-import GuestResultLayout from "@/components/layout/GuestResultLayout";
-import GuestImage from "@/components/utils/GuestImage";
+import Footer from "@/components/common/Footer";
 import NicknameTitle from "@/components/utils/NicknameTitle";
 import { useGetSuffix } from "@/hooks/useGetSuffix";
-import { UtilBtn } from "@/styles/buttonStyle";
 import { useRouter } from "next/router";
-import Copy from "@/svg/copy.svg";
-import Download from "@/svg/download.svg";
-import Report from "@/svg/report-icon.svg";
 import React, { useRef } from "react";
 import {
   DehydratedState,
@@ -18,11 +12,9 @@ import {
 } from "@tanstack/react-query";
 import { useGetHostResult } from "@/apis/host";
 import useGetImage from "@/query/get/useGetImage";
-import HostPagination from "@/components/HostResult/HostPagination";
 import { useUserStore } from "@/store/user";
-import html2canvas from "html2canvas";
-import saveAs from "file-saver";
 import KakaoShareBtn from "@/components/utils/KakaoShareBtn";
+import HostDeployLayout from "@/components/Layout/HostDeployLayout";
 
 const Index = ({ dehydratedState }: { dehydratedState: DehydratedState }) => {
   const { data, error } = useQuery({
@@ -31,7 +23,6 @@ const Index = ({ dehydratedState }: { dehydratedState: DehydratedState }) => {
     retry: false,
   });
   const router = useRouter();
-  // 일단 되는지 테스트..
   const image = data?.data.image ?? "000";
   const hostName = decodeURIComponent(router.query.name as string);
   const { imgUrl } = useGetImage(image);
@@ -48,21 +39,6 @@ const Index = ({ dehydratedState }: { dehydratedState: DehydratedState }) => {
     router.back();
   }
   const divRef = useRef<HTMLDivElement>(null);
-
-  const handleDownload = async () => {
-    if (!divRef.current) return;
-
-    try {
-      const canvas = await html2canvas(divRef.current, { scale: 2 });
-      canvas.toBlob((blob) => {
-        if (blob !== null) {
-          saveAs(blob, "result.png");
-        }
-      });
-    } catch (error) {
-      console.error("Error converting div to image:", error);
-    }
-  };
   return (
     <HydrationBoundary state={dehydratedState}>
       <>
@@ -73,71 +49,13 @@ const Index = ({ dehydratedState }: { dehydratedState: DehydratedState }) => {
                 친구들이 생각하는 {hostName}
                 {useGetSuffix(hostName, 1)}
               </NicknameTitle>
-              {
-                // undefined, null, 0, false등을 falsy 값이 아님을 나타내는 방법
-                data &&
-                data.data &&
-                data.data.title &&
-                data.data.first &&
-                data.data.now ? (
-                  <>
-                    <GuestResultLayout
-                      imgsrc={imgUrl}
-                      title={data.data.title}
-                      first={data.data.first}
-                      now={data.data.now}
-                      ref={divRef}
-                    />
-                    <div className="mt-4 flex flex-col gap-5 mb-28">
-                      <UtilBtn isUrl={false} onClick={handleDownload}>
-                        이미지 다운로드
-                        <Download />
-                      </UtilBtn>
-                      <UtilBtn
-                        isUrl={false}
-                        onClick={() =>
-                          router.push(
-                            `/hostdeploy/hostStatistic?name=${hostName}`
-                          )
-                        }
-                      >
-                        질문별 통계 보러가기
-                        <Report />
-                      </UtilBtn>
-                    </div>
-                    <div>
-                      <div className=" text-2xl font-bold font-Neo text-[#64422E] mb-12">
-                        방문자 목록
-                      </div>
-                      <HostPagination />
-                    </div>
-                    <div>
-                      <div className="font-Neo text-center font-bold text-[#64422E] text-base mb-3">
-                        친구에게 공유하고 내 이미지를 알아보세요!
-                      </div>
-                      <KakaoShareBtn />
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <div className="mt-3 mb-[60px]">
-                      <GuestImage src={imgUrl} />
-                    </div>
-                    <div>
-                      <div className="font-Neo text-center font-bold text-[#64422E] text-base mb-3">
-                        친구에게 공유하고 내 이미지를 알아보세요!
-                      </div>
-                      <UtilBtn
-                        isUrl={true}
-                        onClick={() => router.push("/login")}
-                      >
-                        물어보러가기
-                        <Copy />
-                      </UtilBtn>
-                    </div>
-                  </>
-                )
-              }
+              <HostDeployLayout
+                data={data}
+                hostName={hostName}
+                imgUrl={imgUrl}
+                divRef={divRef}
+              />
+              <KakaoShareBtn />
             </div>
           </div>
           <Footer />
