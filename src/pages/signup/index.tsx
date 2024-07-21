@@ -1,4 +1,4 @@
-import NicknameInput from "@/components/layout/NicknameInput";
+import NicknameInput from "@/components/common/NicknameInput";
 import React from "react";
 
 const index = () => {

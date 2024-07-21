@@ -1,4 +1,4 @@
-import Footer from "@/components/layout/Footer";
+import Footer from "@/components/common/Footer";
 import { useRouter } from "next/router";
 import React from "react";
 import { useQuery } from "@tanstack/react-query";

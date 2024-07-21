@@ -1,7 +1,7 @@
-import GuestResultLayout from "@/components/layout/GuestResultLayout";
+import GuestResultLayout from "@/components/Layout/GuestResultLayout";
 import { useGetSuffix } from "@/hooks/useGetSuffix";
 import React, { useEffect, useState } from "react";
-import Footer from "@/components/layout/Footer";
+import Footer from "@/components/common/Footer";
 import { useRouter } from "next/router";
 import NicknameTitle from "@/components/utils/NicknameTitle";
 import axios from "axios";

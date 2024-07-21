@@ -1,5 +1,5 @@
 import React from "react";
-import QuestionContent from "../layout/QuestionContent";
+import QuestionContent from "../common/QuestionContent";
 import { firstImpressionArray } from "../../constants/questionArray";
 import { QuestionBtn } from "@/styles/questionStyle";
 import { useGetSuffix } from "@/hooks/useGetSuffix";

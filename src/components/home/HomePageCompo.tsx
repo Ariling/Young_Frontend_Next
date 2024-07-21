@@ -1,7 +1,7 @@
 import Image from "next/image";
 import BG from "@/images/BG.png";
 import React from "react";
-import NicknameInput from "../layout/NicknameInput";
+import NicknameInput from "../common/NicknameInput";
 import KakaoBtn from "../utils/KakaoBtn";
 import { useGetSuffix } from "@/hooks/useGetSuffix";
 
