@@ -3,7 +3,7 @@ import Back from "@/svg/back.svg";
 import { useRouter } from "next/router";
 import Footer from "@/components/layout/Footer";
 import NicknameTitle from "@/components/utils/NicknameTitle";
-import { WhiteBox } from "@/pages/hostResult/[nickname]";
+import { WhiteBox } from "@/styles/hostStyle";
 import { Istatistics, Tstatistic } from "@/types/Tstatistic";
 import { css, styled } from "twin.macro";
 import {

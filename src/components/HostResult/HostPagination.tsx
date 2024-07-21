@@ -1,4 +1,4 @@
-import { WhiteBox } from "@/pages/hostResult/[nickname]";
+import { WhiteBox } from "@/styles/hostStyle";
 import React, { useEffect, useState } from "react";
 import { styled } from "twin.macro";
 import File from "@/svg/file.svg";
