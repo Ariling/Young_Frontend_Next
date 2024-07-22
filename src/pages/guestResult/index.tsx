@@ -2,34 +2,22 @@ import GuestResultLayout from "@/components/Layout/GuestResultLayout";
 import { useGetSuffix } from "@/hooks/useGetSuffix";
 import React, { useEffect, useState } from "react";
 import Footer from "@/components/common/Footer";
-import { useRouter } from "next/router";
 import NicknameTitle from "@/components/utils/NicknameTitle";
-import axios from "axios";
-import { BASE_URL } from "@/config";
 import useGetImage from "@/query/get/useGetImage";
-import { useQuestionStore } from "@/store/question";
 import GuestResultCompo from "@/components/guestResult/GuestResultCompo";
-
-export type Tdata = {
-  hostId: string;
-  hostName: string;
-  guestName: string;
-  animal: number;
-  emoji: number;
-  color: number;
-  title: string;
-  first: string;
-  now: string;
-};
-
-type TProps = {
-  message: string;
-  data: Tdata;
-};
+import { TProps } from "@/types/THost";
+import { postGuestResult } from "@/apis/guest";
+import useGetGuestRoute from "@/hooks/useGetGuestRoute";
+import { useQuestionStore } from "@/store/question";
+import { useRouter } from "next/router";
 
 const Index = () => {
-  // 이거 CSR로 해야겠다... 너무 복잡하다 이렇게 하려니깐...
   const router = useRouter();
+  const questionArray = useQuestionStore.getState().questionArray;
+  const { hostId, nickname: guestName } = router.query as {
+    hostId: string;
+    nickname: string;
+  };
   const [props, setProps] = useState<TProps>({
     message: "",
     data: {
@@ -44,38 +32,26 @@ const Index = () => {
       now: "",
     },
   });
-  // resetArray는 나중에 가드 만들면서 하는게 좋을 듯!
-  const questionArray = useQuestionStore.getState().questionArray;
-  const { hostId, nickname: guestName } = router.query as {
-    hostId: string;
-    nickname: string;
-  };
+  const info = useGetGuestRoute();
   useEffect(() => {
-    const fetchData = async () => {
-      if (questionArray.some((el) => el === 0) || !hostId || !guestName) {
-        router.replace("/login");
-        return;
-      }
-      try {
-        const API_URL = `${BASE_URL}/responses`;
+    if (questionArray.some((el) => el === 0) || !hostId || !guestName) {
+      router.replace("/login");
+      return;
+    }
 
-        const res = await axios.post(API_URL, {
-          hostId: hostId,
-          guestName: guestName,
-          animal: questionArray[0],
-          emoji: questionArray[1],
-          color: questionArray[2],
-          first: questionArray[3],
-          now: questionArray[4],
-        });
-        const props = res.data;
-        setProps(props);
+    const fetchData = async () => {
+      try {
+        const data = await postGuestResult(hostId, guestName, questionArray);
+        if (data) {
+          setProps(data);
+        }
       } catch (error) {
-        router.replace("/login");
+        console.error("Error fetching data:", error);
       }
     };
+
     fetchData();
-  }, []);
+  }, [questionArray, router, postGuestResult]);
   const imgNum =
     String(props.data.color) +
     String(props.data.emoji) +
@@ -97,7 +73,7 @@ const Index = () => {
               first={props.data.first}
               now={props.data.now}
             />
-            <GuestResultCompo hostId={hostId} nickname={nickname} />
+            <GuestResultCompo hostId={info.id} nickname={nickname} />
           </div>
         </div>
         <Footer />
