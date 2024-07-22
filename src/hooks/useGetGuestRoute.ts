@@ -1,6 +1,5 @@
 import { Tguest } from "@/types/Tguest";
 import { useRouter } from "next/router";
-import React from "react";
 
 const useGetGuestRoute = () => {
   const route = useRouter();

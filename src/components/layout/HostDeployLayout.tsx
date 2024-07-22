@@ -1,7 +1,7 @@
 import React from "react";
 import HostDeployForm from "../HostResult/HostDeployForm";
 import GuestImage from "../utils/GuestImage";
-import { IHostDeploy } from "@/types/Tstatistic";
+import { IHostDeploy } from "@/types/THost";
 
 const HostDeployLayout = (props: IHostDeploy) => {
   return (

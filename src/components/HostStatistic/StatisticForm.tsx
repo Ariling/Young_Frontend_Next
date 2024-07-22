@@ -1,5 +1,5 @@
 import { WhiteBox } from "@/styles/hostStyle";
-import { Istatistics } from "@/types/Tstatistic";
+import { Istatistics } from "@/types/THost";
 import React from "react";
 import StatisticResult from "./StatisticResult";
 import {

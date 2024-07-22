@@ -1,4 +1,3 @@
-import { useRouter } from "next/router";
 import React from "react";
 import { useGetSuffix } from "@/hooks/useGetSuffix";
 import Footer from "@/components/common/Footer";

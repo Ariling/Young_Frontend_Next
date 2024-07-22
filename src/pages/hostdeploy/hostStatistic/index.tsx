@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import Footer from "@/components/common/Footer";
 import NicknameTitle from "@/components/utils/NicknameTitle";
 import { WhiteBox } from "@/styles/hostStyle";
-import { Istatistics } from "@/types/Tstatistic";
+import { Istatistics } from "@/types/THost";
 import {
   DehydratedState,
   HydrationBoundary,

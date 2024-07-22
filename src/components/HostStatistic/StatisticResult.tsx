@@ -1,4 +1,4 @@
-import { Tstatistic } from "@/types/Tstatistic";
+import { Tstatistic } from "@/types/THost";
 import React, { ReactNode } from "react";
 import { css, styled } from "twin.macro";
 
