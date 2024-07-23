@@ -1,15 +1,16 @@
 import GuestResultLayout from "@/components/Layout/GuestResultLayout";
-import { useGetSuffix } from "@/hooks/useGetSuffix";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Footer from "@/components/common/Footer";
 import NicknameTitle from "@/components/utils/NicknameTitle";
 import useGetImage from "@/query/get/useGetImage";
 import GuestResultCompo from "@/components/guestResult/GuestResultCompo";
-import { TProps } from "@/types/THost";
 import { postGuestResult } from "@/apis/guest";
 import useGetGuestRoute from "@/hooks/useGetGuestRoute";
 import { useQuestionStore } from "@/store/question";
 import { useRouter } from "next/router";
+import { useQuery } from "@tanstack/react-query";
+import ProgressCompo from "@/components/utils/ProgressCompo";
+import useGetSuffixArray from "@/hooks/useGetSuffixArray";
 
 const Index = () => {
   const router = useRouter();
@@ -18,46 +19,35 @@ const Index = () => {
     hostId: string;
     nickname: string;
   };
-  const [props, setProps] = useState<TProps>({
-    message: "",
-    data: {
-      hostId: "",
-      hostName: "",
-      guestName: "",
-      animal: 0,
-      emoji: 0,
-      color: 0,
-      title: "",
-      first: "",
-      now: "",
-    },
-  });
+  const guestSuffixArray = useGetSuffixArray(guestName) as string[];
   const info = useGetGuestRoute();
+  const { data, error, isLoading } = useQuery({
+    queryKey: ["guestResult", hostId, guestName],
+    queryFn: () => postGuestResult(hostId, guestName, questionArray),
+  });
   useEffect(() => {
-    if (questionArray.some((el) => el === 0) || !hostId || !guestName) {
+    if (
+      questionArray.some((el) => el === 0) ||
+      !hostId ||
+      !guestName ||
+      !data ||
+      error
+    ) {
       router.replace("/login");
-      return;
     }
-
-    const fetchData = async () => {
-      try {
-        const data = await postGuestResult(hostId, guestName, questionArray);
-        if (data) {
-          setProps(data);
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
   }, [questionArray, router, postGuestResult]);
   const imgNum =
-    String(props.data.color) +
-    String(props.data.emoji) +
-    String(props.data.animal);
+    String(data.data.color) +
+    String(data.data.emoji) +
+    String(data.data.animal);
   const { imgUrl } = useGetImage(imgNum);
-  const nickname = props.data.hostName;
+  const nickname = data.data.hostName;
+  if (isLoading)
+    return (
+      <>
+        <ProgressCompo />
+      </>
+    );
   return (
     <>
       <main className="bg--layout">
@@ -65,13 +55,13 @@ const Index = () => {
           <div className="flex flex-col items-center">
             <NicknameTitle>
               내가 생각하는 {nickname}
-              {useGetSuffix(nickname, 1)}?
+              {guestSuffixArray[0]}?
             </NicknameTitle>
             <GuestResultLayout
               imgsrc={imgUrl}
-              title={props.data.title}
-              first={props.data.first}
-              now={props.data.now}
+              title={data.data.title}
+              first={data.data.first}
+              now={data.data.now}
             />
             <GuestResultCompo hostId={info.id} nickname={nickname} />
           </div>

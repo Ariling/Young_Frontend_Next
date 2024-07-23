@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Footer from "@/components/common/Footer";
 import NicknameTitle from "@/components/utils/NicknameTitle";
@@ -16,14 +16,18 @@ import useGetSuffixArray from "@/hooks/useGetSuffixArray";
 import { useUserStore } from "@/store/user";
 import StatisticForm from "@/components/HostStatistic/StatisticForm";
 import BackCompo from "@/components/utils/BackCompo";
+import ProgressCompo from "@/components/utils/ProgressCompo";
 
 const Index = ({ dehydratedState }: { dehydratedState: DehydratedState }) => {
   const resetInfo = useUserStore.use.resetInfo();
-  const { data, error } = useQuery({
+  const router = useRouter();
+  const hostNickname = decodeURIComponent(router.query.name as string);
+  const [statisticData, setStatisticData] = useState<Istatistics | null>(null);
+  const hostSuffixArray = useGetSuffixArray(hostNickname) as string[];
+  const { data, error, isLoading } = useQuery({
     queryKey: ["host-stats"],
     queryFn: useGetStatistic,
   });
-  const router = useRouter();
   if (error) {
     alert("로그인을 진행해주세요");
     resetInfo();
@@ -35,9 +39,6 @@ const Index = ({ dehydratedState }: { dehydratedState: DehydratedState }) => {
     alert("잘못된 접근입니다.");
     router.back();
   }
-  const hostNickname = decodeURIComponent(router.query.name as string);
-  const [statisticData, setStatisticData] = useState<Istatistics | null>(null);
-  const hostSuffixArray = useGetSuffixArray(hostNickname) as string[];
   useEffect(() => {
     if (data && data.data) {
       setStatisticData(data.data);
@@ -45,6 +46,12 @@ const Index = ({ dehydratedState }: { dehydratedState: DehydratedState }) => {
       console.log(error);
     }
   }, [data]);
+  if (isLoading)
+    return (
+      <>
+        <ProgressCompo />
+      </>
+    );
   return (
     <HydrationBoundary state={dehydratedState}>
       <>

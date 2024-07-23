@@ -1,6 +1,5 @@
 import Footer from "@/components/common/Footer";
 import NicknameTitle from "@/components/utils/NicknameTitle";
-import { useGetSuffix } from "@/hooks/useGetSuffix";
 import { useRouter } from "next/router";
 import React, { useRef } from "react";
 import {
@@ -15,16 +14,20 @@ import useGetImage from "@/query/get/useGetImage";
 import { useUserStore } from "@/store/user";
 import KakaoShareBtn from "@/components/utils/KakaoShareBtn";
 import HostDeployLayout from "@/components/Layout/HostDeployLayout";
+import useGetSuffixArray from "@/hooks/useGetSuffixArray";
+import ProgressCompo from "@/components/utils/ProgressCompo";
 
 const Index = ({ dehydratedState }: { dehydratedState: DehydratedState }) => {
-  const { data, error } = useQuery({
+  const { data, error, isLoading } = useQuery({
     queryKey: ["host-result"],
     queryFn: useGetHostResult,
     retry: false,
   });
   const router = useRouter();
   const image = data?.data.image ?? "000";
+  const divRef = useRef<HTMLDivElement>(null);
   const hostName = decodeURIComponent(router.query.name as string);
+  const hostSuffixArray = useGetSuffixArray(hostName) as string[];
   const { imgUrl } = useGetImage(image);
   const resetInfo = useUserStore.use.resetInfo();
   if (error) {
@@ -38,7 +41,12 @@ const Index = ({ dehydratedState }: { dehydratedState: DehydratedState }) => {
     alert("잘못된 접근입니다.");
     router.back();
   }
-  const divRef = useRef<HTMLDivElement>(null);
+  if (isLoading)
+    return (
+      <>
+        <ProgressCompo />
+      </>
+    );
   return (
     <HydrationBoundary state={dehydratedState}>
       <>
@@ -47,7 +55,7 @@ const Index = ({ dehydratedState }: { dehydratedState: DehydratedState }) => {
             <div className="flex flex-col items-center">
               <NicknameTitle>
                 친구들이 생각하는 {hostName}
-                {useGetSuffix(hostName, 1)}
+                {hostSuffixArray[0]}
               </NicknameTitle>
               <HostDeployLayout
                 data={data}

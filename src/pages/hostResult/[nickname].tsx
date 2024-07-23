@@ -14,6 +14,7 @@ import {
 import { useUserStore } from "@/store/user";
 import HostResultForm from "@/components/HostResult/HostResultForm";
 import BackCompo from "@/components/utils/BackCompo";
+import ProgressCompo from "@/components/utils/ProgressCompo";
 
 const Index = () => {
   const router = useRouter();
@@ -23,7 +24,7 @@ const Index = () => {
   const hostSuffixArray = useGetSuffixArray(hostNickname) as string[];
   const resetInfo = useUserStore.use.resetInfo();
   let resultArray: Array<string> = [];
-  const { data, error } = useQuery({
+  const { data, error, isLoading } = useQuery({
     queryKey: ["host-guest-result", guestId],
     queryFn: useGetHostGuestResult,
   });
@@ -46,6 +47,12 @@ const Index = () => {
       presentImpressionArray[data.data.now - 1],
     ];
   }
+  if (isLoading)
+    return (
+      <>
+        <ProgressCompo />
+      </>
+    );
   return (
     <>
       <main className="bg--layout">
