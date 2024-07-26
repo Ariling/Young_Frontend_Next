@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Footer from "@/components/common/Footer";
 import NicknameTitle from "@/components/utils/NicknameTitle";
