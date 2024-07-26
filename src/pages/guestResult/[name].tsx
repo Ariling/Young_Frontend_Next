@@ -50,7 +50,15 @@ export const getServerSideProps: GetServerSideProps<{
   props: TguestResult;
 }> = async (context) => {
   const hostId = context.params?.name as string;
-
+  if (!hostId) {
+    alert("접근이 허용되지 않은 방식입니다");
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
+  }
   try {
     const API_URL = `${BASE_URL}/results/${hostId}`;
 

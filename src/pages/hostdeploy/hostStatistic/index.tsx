@@ -28,7 +28,7 @@ const Index = ({ dehydratedState }: { dehydratedState: DehydratedState }) => {
     queryKey: ["host-stats"],
     queryFn: useGetStatistic,
   });
-  if (error) {
+  if (error || !hostNickname) {
     alert("로그인을 진행해주세요");
     resetInfo();
     router.replace("/login");

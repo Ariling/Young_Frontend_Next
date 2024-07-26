@@ -20,7 +20,7 @@ const Index = () => {
   const router = useRouter();
   const guestId = router.query.nickname as string;
   const guestName = decodeURIComponent(router.query.name as string);
-  const hostNickname = decodeURIComponent(router.query.host as string) || "";
+  const hostNickname = decodeURIComponent(router.query.host as string);
   const hostSuffixArray = useGetSuffixArray(hostNickname) as string[];
   const resetInfo = useUserStore.use.resetInfo();
   let resultArray: Array<string> = [];
@@ -28,7 +28,7 @@ const Index = () => {
     queryKey: ["host-guest-result", guestId],
     queryFn: useGetHostGuestResult,
   });
-  if (error) {
+  if (error || !hostNickname || !guestName) {
     alert("로그인을 진행해주세요");
     resetInfo();
     router.replace("/login");

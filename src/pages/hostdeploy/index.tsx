@@ -30,7 +30,7 @@ const Index = ({ dehydratedState }: { dehydratedState: DehydratedState }) => {
   const hostSuffixArray = useGetSuffixArray(hostName) as string[];
   const { imgUrl } = useGetImage(image);
   const resetInfo = useUserStore.use.resetInfo();
-  if (error) {
+  if (error || !hostName) {
     alert("로그인을 진행해주세요");
     resetInfo();
     router.replace("/login");
