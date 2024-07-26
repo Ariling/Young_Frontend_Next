@@ -12,7 +12,7 @@ import { useUserStore } from "@/store/user";
 const HostPagination = () => {
   const [pageNum, setPageNum] = useState(1);
   const router = useRouter();
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["host-resultPage", pageNum],
     queryFn: useGetPageResult,
   });
@@ -28,9 +28,9 @@ const HostPagination = () => {
   }, [data]);
   return (
     <>
-      {data?.guests && Array.isArray(data?.guests) ? (
-        <>
-          <WhiteBox isStatistic className="mb-4">
+      <WhiteBox isStatistic className="mb-4">
+        {!isLoading && data?.guests && Array.isArray(data?.guests) ? (
+          <>
             <TableHeaderContainer>
               <NicknameBox>
                 <HeaderText>닉네임</HeaderText>
@@ -61,14 +61,16 @@ const HostPagination = () => {
                   </AnswerBox>
                 </TableListContainer>
               ))}
-            <Pagination
-              totalPageNum={Math.ceil(data.total / 5)}
-              pageNum={pageNum}
-              setPageNum={setPageNum}
-            />
-          </WhiteBox>
-        </>
-      ) : null}
+          </>
+        ) : (
+          <div>페이지 불러오는 중</div>
+        )}
+        <Pagination
+          totalPageNum={Math.ceil(data.total / 5)}
+          pageNum={pageNum}
+          setPageNum={setPageNum}
+        />
+      </WhiteBox>
     </>
   );
 };
