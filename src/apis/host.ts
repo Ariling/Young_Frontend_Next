@@ -1,4 +1,4 @@
-import { BASE_URL } from "@/config";
+import { axiosInstance, BASE_URL } from "@/config";
 import axios from "axios";
 import request from "./request";
 import { useUserStore } from "@/store/user";
@@ -49,14 +49,6 @@ export const postSignup = async ({
 
   return response.data;
 };
-
-const axiosInstance = axios.create({
-  baseURL: BASE_URL,
-  headers: {
-    "Content-Type": "application/json",
-    accept: "application/json",
-  },
-});
 
 export const useGetHostResult = async () => {
   const data = useUserStore.getState().userInfo;

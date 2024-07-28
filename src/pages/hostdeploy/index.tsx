@@ -1,14 +1,7 @@
-import Footer from "@/components/layout/Footer";
-import GuestResultLayout from "@/components/layout/GuestResultLayout";
-import GuestImage from "@/components/utils/GuestImage";
+import Footer from "@/components/common/Footer";
 import NicknameTitle from "@/components/utils/NicknameTitle";
-import { useGetSuffix } from "@/hooks/useGetSuffix";
-import { UtilBtn } from "@/styles/buttonStyle";
 import { useRouter } from "next/router";
-import Copy from "@/svg/copy.svg";
-import Download from "@/svg/download.svg";
-import Report from "@/svg/report-icon.svg";
-import React from "react";
+import React, { useRef } from "react";
 import {
   DehydratedState,
   HydrationBoundary,
@@ -18,22 +11,26 @@ import {
 } from "@tanstack/react-query";
 import { useGetHostResult } from "@/apis/host";
 import useGetImage from "@/query/get/useGetImage";
-import HostPagination from "@/components/HostResult/HostPagination";
 import { useUserStore } from "@/store/user";
+import KakaoShareBtn from "@/components/utils/KakaoShareBtn";
+import HostDeployLayout from "@/components/Layout/HostDeployLayout";
+import useGetSuffixArray from "@/hooks/useGetSuffixArray";
+import ProgressCompo from "@/components/utils/ProgressCompo";
 
 const Index = ({ dehydratedState }: { dehydratedState: DehydratedState }) => {
-  const { data, error } = useQuery({
+  const { data, error, isLoading } = useQuery({
     queryKey: ["host-result"],
     queryFn: useGetHostResult,
     retry: false,
   });
   const router = useRouter();
-  // 일단 되는지 테스트..
   const image = data?.data.image ?? "000";
+  const divRef = useRef<HTMLDivElement>(null);
   const hostName = decodeURIComponent(router.query.name as string);
+  const hostSuffixArray = useGetSuffixArray(hostName) as string[];
   const { imgUrl } = useGetImage(image);
   const resetInfo = useUserStore.use.resetInfo();
-  if (error) {
+  if (error || !hostName) {
     alert("로그인을 진행해주세요");
     resetInfo();
     router.replace("/login");
@@ -44,6 +41,12 @@ const Index = ({ dehydratedState }: { dehydratedState: DehydratedState }) => {
     alert("잘못된 접근입니다.");
     router.back();
   }
+  if (isLoading)
+    return (
+      <>
+        <ProgressCompo />
+      </>
+    );
   return (
     <HydrationBoundary state={dehydratedState}>
       <>
@@ -52,81 +55,15 @@ const Index = ({ dehydratedState }: { dehydratedState: DehydratedState }) => {
             <div className="flex flex-col items-center">
               <NicknameTitle>
                 친구들이 생각하는 {hostName}
-                {useGetSuffix(hostName, 1)}
+                {hostSuffixArray[0]}
               </NicknameTitle>
-              {
-                // undefined, null, 0, false등을 falsy 값이 아님을 나타내는 방법
-                data &&
-                data.data &&
-                data.data.title &&
-                data.data.first &&
-                data.data.now ? (
-                  <>
-                    <GuestResultLayout
-                      imgsrc={imgUrl}
-                      title={data.data.title}
-                      first={data.data.first}
-                      now={data.data.now}
-                    />
-                    <div className="mt-4 flex flex-col gap-5 mb-28">
-                      <UtilBtn
-                        isUrl={false}
-                        onClick={() => router.push("/login")}
-                      >
-                        이미지 다운로드
-                        <Download />
-                      </UtilBtn>
-                      <UtilBtn
-                        isUrl={false}
-                        onClick={() =>
-                          router.push(
-                            `/hostdeploy/hostStatistic?name=${hostName}`
-                          )
-                        }
-                      >
-                        질문별 통계 보러가기
-                        <Report />
-                      </UtilBtn>
-                    </div>
-                    <div>
-                      <div className=" text-2xl font-bold font-Neo text-[#64422E] mb-12">
-                        방문자 목록
-                      </div>
-                      <HostPagination />
-                    </div>
-                    <div>
-                      <div className="font-Neo text-center font-bold text-[#64422E] text-base mb-3">
-                        친구에게 공유하고 내 이미지를 알아보세요!
-                      </div>
-                      <UtilBtn
-                        isUrl={true}
-                        onClick={() => router.push("/login")}
-                      >
-                        물어보러가기
-                        <Copy />
-                      </UtilBtn>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <div className="mt-3 mb-[60px]">
-                      <GuestImage src={imgUrl} />
-                    </div>
-                    <div>
-                      <div className="font-Neo text-center font-bold text-[#64422E] text-base mb-3">
-                        친구에게 공유하고 내 이미지를 알아보세요!
-                      </div>
-                      <UtilBtn
-                        isUrl={true}
-                        onClick={() => router.push("/login")}
-                      >
-                        물어보러가기
-                        <Copy />
-                      </UtilBtn>
-                    </div>
-                  </>
-                )
-              }
+              <HostDeployLayout
+                data={data}
+                hostName={hostName}
+                imgUrl={imgUrl}
+                divRef={divRef}
+              />
+              <KakaoShareBtn />
             </div>
           </div>
           <Footer />

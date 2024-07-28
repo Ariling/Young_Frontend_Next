@@ -1,87 +1,53 @@
-import GuestResultLayout from "@/components/layout/GuestResultLayout";
-import { useGetSuffix } from "@/hooks/useGetSuffix";
-import React, { useEffect, useState } from "react";
-import Footer from "@/components/layout/Footer";
-import { useRouter } from "next/router";
+import GuestResultLayout from "@/components/Layout/GuestResultLayout";
+import React, { useEffect } from "react";
+import Footer from "@/components/common/Footer";
 import NicknameTitle from "@/components/utils/NicknameTitle";
-import axios from "axios";
-import { BASE_URL } from "@/config";
 import useGetImage from "@/query/get/useGetImage";
-import { useQuestionStore } from "@/store/question";
 import GuestResultCompo from "@/components/guestResult/GuestResultCompo";
-
-export type Tdata = {
-  hostId: string;
-  hostName: string;
-  guestName: string;
-  animal: number;
-  emoji: number;
-  color: number;
-  title: string;
-  first: string;
-  now: string;
-};
-
-type TProps = {
-  message: string;
-  data: Tdata;
-};
+import { postGuestResult } from "@/apis/guest";
+import useGetGuestRoute from "@/hooks/useGetGuestRoute";
+import { useQuestionStore } from "@/store/question";
+import { useRouter } from "next/router";
+import { useQuery } from "@tanstack/react-query";
+import ProgressCompo from "@/components/utils/ProgressCompo";
+import useGetSuffixArray from "@/hooks/useGetSuffixArray";
 
 const Index = () => {
-  // 이거 CSR로 해야겠다... 너무 복잡하다 이렇게 하려니깐...
   const router = useRouter();
-  const [props, setProps] = useState<TProps>({
-    message: "",
-    data: {
-      hostId: "",
-      hostName: "",
-      guestName: "",
-      animal: 0,
-      emoji: 0,
-      color: 0,
-      title: "",
-      first: "",
-      now: "",
-    },
-  });
-  // resetArray는 나중에 가드 만들면서 하는게 좋을 듯!
   const questionArray = useQuestionStore.getState().questionArray;
   const { hostId, nickname: guestName } = router.query as {
     hostId: string;
     nickname: string;
   };
+  const guestSuffixArray = useGetSuffixArray(guestName) as string[];
+  const info = useGetGuestRoute();
+  const { data, error, isLoading } = useQuery({
+    queryKey: ["guestResult", hostId, guestName],
+    queryFn: () => postGuestResult(hostId, guestName, questionArray),
+  });
   useEffect(() => {
-    const fetchData = async () => {
-      if (questionArray.some((el) => el === 0) || !hostId || !guestName) {
-        router.replace("/login");
-        return;
-      }
-      try {
-        const API_URL = `${BASE_URL}/responses`;
-
-        const res = await axios.post(API_URL, {
-          hostId: hostId,
-          guestName: guestName,
-          animal: questionArray[0],
-          emoji: questionArray[1],
-          color: questionArray[2],
-          first: questionArray[3],
-          now: questionArray[4],
-        });
-        const props = res.data;
-        setProps(props);
-      } catch (error) {
-        router.replace("/login");
-      }
-    };
-    fetchData();
-  }, []);
+    if (
+      questionArray.some((el) => el === 0) ||
+      !hostId ||
+      !guestName ||
+      !data ||
+      error
+    ) {
+      router.replace("/login");
+    }
+  }, [questionArray, router, postGuestResult]);
   const imgNum =
-    String(props.data.color) +
-    String(props.data.emoji) +
-    String(props.data.animal);
+    String(data.data.color) +
+    String(data.data.emoji) +
+    String(data.data.animal);
   const { imgUrl } = useGetImage(imgNum);
-  const nickname = props.data.hostName;
+  const nickname = data.data.hostName;
+  if (isLoading)
+    return (
+      <>
+        <ProgressCompo />
+      </>
+    );
   return (
     <>
       <main className="bg--layout">
@@ -89,15 +55,15 @@ const Index = () => {
           <div className="flex flex-col items-center">
             <NicknameTitle>
               내가 생각하는 {nickname}
-              {useGetSuffix(nickname, 1)}?
+              {guestSuffixArray[0]}?
             </NicknameTitle>
             <GuestResultLayout
               imgsrc={imgUrl}
-              title={props.data.title}
-              first={props.data.first}
-              now={props.data.now}
+              title={data.data.title}
+              first={data.data.first}
+              now={data.data.now}
             />
-            <GuestResultCompo hostId={hostId} nickname={nickname} />
+            <GuestResultCompo hostId={info.id} nickname={nickname} />
           </div>
         </div>
         <Footer />

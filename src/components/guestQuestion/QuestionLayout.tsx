@@ -6,9 +6,13 @@ import FirstImpressionQuestion from "./FirstImpressionQuestion";
 import PresentImpressionQuestion from "./PresentImpressionQuestion";
 import { reducer } from "@/types/Treducer";
 import { useRouter } from "next/router";
+import { PrevBtn } from "@/styles/questionStyle";
+import { useQuestionStore } from "@/store/question";
 
 const QuestionLayout = () => {
   const [num, dispatch] = useReducer(reducer, 1);
+  const changeQuestion = useQuestionStore.use.changeQuestion();
+  const changeImgCode = useQuestionStore.use.changeImage();
   const getComponent = (num: number) => {
     if (num === 1) return <FaceQuestion state={num} dispatch={dispatch} />;
     if (num === 2) return <EmojiQuestion state={num} dispatch={dispatch} />;
@@ -31,6 +35,20 @@ const QuestionLayout = () => {
   return (
     <main className="bg--layout flex flex-col items-center justify-center p-7">
       {getComponent(num)}
+      {num !== 1 ? (
+        <PrevBtn
+          className="mt-4"
+          onClick={() => {
+            changeQuestion(num - 1, 0);
+            if (2 <= num && num <= 4) {
+              changeImgCode(String(0), 4 - num);
+            }
+            dispatch({ type: "MINUS" });
+          }}
+        >
+          이전으로
+        </PrevBtn>
+      ) : null}
     </main>
   );
 };

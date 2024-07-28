@@ -1,7 +1,6 @@
 import React from "react";
 import Kakao from "@/svg/kakaologin.svg";
-import { kakaoLoginURL } from "../login/loginInfo";
-import { useRouter } from "next/router";
+import { kakaoLoginURL } from "@/constants/loginInfo";
 
 const KakaoBtn = () => {
   const startKakao = () => {

@@ -10,16 +10,6 @@ export const ColorArray = [
   "흰색",
   "검은색",
 ];
-export const ColorObject = [
-  "text-red-600",
-  "text-yellow-300",
-  "text-green-600",
-  "text-blue-700",
-  "text-purple-700",
-  "text-pink-400",
-  "text-white text-stroke-white",
-  "text-black",
-];
 export const firstImpressionArray = [
   "밝은",
   "다정한",

@@ -3,7 +3,6 @@ import Next from "@/svg/next.svg";
 import Back from "@/svg/back.svg";
 import useGetPageRange from "@/hooks/useGetPageRange";
 import { styled } from "twin.macro";
-import { backgroundImage } from "html2canvas/dist/types/css/property-descriptors/background-image";
 
 interface PaginationProp {
   totalPageNum: number;
