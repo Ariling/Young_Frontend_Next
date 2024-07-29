@@ -1,7 +1,7 @@
 import { UtilBtn } from "@/styles/buttonStyle";
 import saveAs from "file-saver";
 import html2canvas from "html2canvas";
-import React, { RefObject, useRef } from "react";
+import React, { RefObject } from "react";
 import Download from "@/svg/download.svg";
 
 const ImgDownloadBtn = ({ divRef }: { divRef: RefObject<HTMLDivElement> }) => {

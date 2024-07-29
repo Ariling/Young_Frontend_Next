@@ -1,11 +1,11 @@
-import React, { RefObject } from "react";
-import GuestResultLayout from "@/components/Layout/GuestResultLayout";
+import React from "react";
 import HostPagination from "./HostPagination";
 import { UtilBtn } from "@/styles/buttonStyle";
 import { useRouter } from "next/router";
 import ImgDownloadBtn from "./ImgDownloadBtn";
 import Report from "@/svg/report-icon.svg";
 import { IHostDeploy } from "@/types/THost";
+import GuestResultLayout from "../Layout/GuestResultLayout";
 
 const HostDeployForm = (prop: IHostDeploy) => {
   const router = useRouter();

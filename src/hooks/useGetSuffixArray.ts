@@ -1,4 +1,3 @@
-import React from "react";
 import { useGetSuffix } from "./useGetSuffix";
 
 const useGetSuffixArray = (name: string) => {

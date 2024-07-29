@@ -1,6 +1,4 @@
 import request from "./request";
-import { useQuestionStore } from "@/store/question";
-import { useRouter } from "next/router";
 import { axiosInstance } from "@/config";
 
 interface INicknameParam {
