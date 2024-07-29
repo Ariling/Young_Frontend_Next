@@ -19,18 +19,20 @@ const Index = () => {
     hostId: string;
     nickname: string;
   };
-  const guestSuffixArray = useGetSuffixArray(guestName || "") as string[];
+  const guestSuffixArray = useGetSuffixArray(guestName as string);
   const info = useGetGuestRoute();
   const { data, error, isLoading } = useQuery({
     queryKey: ["guestResult", hostId, guestName],
-    queryFn: () => postGuestResult(hostId, guestName, questionArray),
+    queryFn: () =>
+      postGuestResult(hostId as string, guestName as string, questionArray),
+    enabled: !!hostId && !!guestName,
   });
   useEffect(() => {
     if (
       questionArray.some((el) => el === 0) ||
       !hostId ||
       !guestName ||
-      !data.data ||
+      !data ||
       error
     ) {
       router.replace("/login");
