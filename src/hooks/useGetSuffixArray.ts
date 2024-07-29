@@ -8,7 +8,7 @@ const useGetSuffixArray = (name: string) => {
     useGetSuffix(name, 4),
   ];
 
-  return nameData;
+  return nameData as string[];
 };
 
 export default useGetSuffixArray;

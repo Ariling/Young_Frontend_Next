@@ -49,8 +49,7 @@ export default OtherGuestPage;
 export const getServerSideProps: GetServerSideProps<{
   props: TguestResult;
 }> = async (context) => {
-  const hostId = context.params?.name as string;
-  if (!hostId) {
+  if (!context.params) {
     alert("접근이 허용되지 않은 방식입니다");
     return {
       redirect: {
@@ -59,6 +58,7 @@ export const getServerSideProps: GetServerSideProps<{
       },
     };
   }
+  const hostId = context.params.name;
   try {
     const API_URL = `${BASE_URL}/results/${hostId}`;
 
