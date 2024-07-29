@@ -30,20 +30,20 @@ const Index = () => {
       questionArray.some((el) => el === 0) ||
       !hostId ||
       !guestName ||
-      !data ||
+      !data.data ||
       error
     ) {
       router.replace("/login");
     }
   }, [questionArray, router, hostId, guestName, data, error]);
-  const imgNum =
-    String(data.data.color) ||
-    "" + String(data.data.emoji) ||
-    "" + String(data.data.animal) ||
-    "";
+  const imgNum = data.data
+    ? String(data.data.color) +
+      String(data.data.emoji) +
+      String(data.data.animal)
+    : "";
   const { imgUrl } = useGetImage(imgNum);
-  const nickname = data.data.hostName || "";
-  if (isLoading)
+  const nickname = data.data ? data.data.hostName : "";
+  if (isLoading || !data)
     return (
       <>
         <ProgressCompo />
@@ -58,12 +58,14 @@ const Index = () => {
               내가 생각하는 {nickname}
               {guestSuffixArray[0]}?
             </NicknameTitle>
-            <GuestResultLayout
-              imgsrc={imgUrl}
-              title={data.data.title || ""}
-              first={data.data.first || ""}
-              now={data.data.now || ""}
-            />
+            {data.data && (
+              <GuestResultLayout
+                imgsrc={imgUrl}
+                title={data.data.title}
+                first={data.data.first}
+                now={data.data.now}
+              />
+            )}
             <GuestResultCompo hostId={info.id} nickname={nickname} />
           </div>
         </div>
