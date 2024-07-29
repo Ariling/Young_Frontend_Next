@@ -19,7 +19,7 @@ const Index = () => {
     hostId: string;
     nickname: string;
   };
-  const guestSuffixArray = useGetSuffixArray(guestName) as string[];
+  const guestSuffixArray = useGetSuffixArray(guestName || "") as string[];
   const info = useGetGuestRoute();
   const { data, error, isLoading } = useQuery({
     queryKey: ["guestResult", hostId, guestName],
@@ -35,13 +35,14 @@ const Index = () => {
     ) {
       router.replace("/login");
     }
-  }, [questionArray, router, postGuestResult]);
+  }, [questionArray, router, hostId, guestName, data, error]);
   const imgNum =
-    String(data.data.color) +
-    String(data.data.emoji) +
-    String(data.data.animal);
+    String(data.data.color) ||
+    "" + String(data.data.emoji) ||
+    "" + String(data.data.animal) ||
+    "";
   const { imgUrl } = useGetImage(imgNum);
-  const nickname = data.data.hostName;
+  const nickname = data.data.hostName || "";
   if (isLoading)
     return (
       <>
@@ -59,9 +60,9 @@ const Index = () => {
             </NicknameTitle>
             <GuestResultLayout
               imgsrc={imgUrl}
-              title={data.data.title}
-              first={data.data.first}
-              now={data.data.now}
+              title={data.data.title || ""}
+              first={data.data.first || ""}
+              now={data.data.now || ""}
             />
             <GuestResultCompo hostId={info.id} nickname={nickname} />
           </div>
