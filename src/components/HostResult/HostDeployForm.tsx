@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import ImgDownloadBtn from "./ImgDownloadBtn";
 import Report from "@/svg/report-icon.svg";
 import { IHostDeploy } from "@/types/THost";
-import GuestResultLayout from "../Layout/GuestResultLayout";
+import GuestResultLayout from "@/components/Layout/GuestResultLayout";
 
 const HostDeployForm = (prop: IHostDeploy) => {
   const router = useRouter();
