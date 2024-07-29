@@ -19,7 +19,8 @@ const Index = () => {
     hostId: string;
     nickname: string;
   };
-  const guestSuffixArray = useGetSuffixArray(guestName as string);
+  // 극단적으로 한 번 없애보기
+  // const guestSuffixArray = useGetSuffixArray(guestName as string);
   const info = useGetGuestRoute();
   const { data, error, isLoading } = useQuery({
     queryKey: ["guestResult", hostId, guestName],
@@ -58,7 +59,7 @@ const Index = () => {
           <div className="flex flex-col items-center">
             <NicknameTitle>
               내가 생각하는 {nickname}
-              {guestSuffixArray[0]}?
+              {/* {guestSuffixArray[0]}? */}
             </NicknameTitle>
             {data.data && (
               <GuestResultLayout
