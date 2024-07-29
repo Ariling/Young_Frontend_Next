@@ -1,7 +1,7 @@
 import React from "react";
 import { useGetSuffix } from "@/hooks/useGetSuffix";
 import Footer from "@/components/common/Footer";
-import GuestResultLayout from "@/components/Layout/GuestResultLayout";
+import GuestResultLayout from "@/components/layout/GuestResultLayout";
 import NicknameTitle from "@/components/utils/NicknameTitle";
 import { GetServerSideProps } from "next";
 import { TguestResult } from "@/types/Tguest";

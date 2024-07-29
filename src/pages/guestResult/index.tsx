@@ -1,4 +1,4 @@
-import GuestResultLayout from "@/components/Layout/GuestResultLayout";
+import GuestResultLayout from "@/components/layout/GuestResultLayout";
 import React, { useEffect } from "react";
 import Footer from "@/components/common/Footer";
 import NicknameTitle from "@/components/utils/NicknameTitle";
