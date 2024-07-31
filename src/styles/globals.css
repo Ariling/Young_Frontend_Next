@@ -4,13 +4,13 @@
 
 :root {
   --foreground-rgb: 0, 0, 0;
-  --background-rgb : 246,249,255;
+  --background-rgb: 246, 249, 255;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
-    --background-rgb: 246,249,255;
+    --background-rgb: 246, 249, 255;
   }
 }
 
@@ -18,65 +18,70 @@ body {
   -ms-overflow-style: none;
   min-height: 100vh;
 }
-main{
+main {
   letter-spacing: 6%;
 }
 ::-webkit-scrollbar {
-display: none;
+  display: none;
 }
 
-main{
+main {
   position: relative;
 }
 
 .text-stroke-white {
-  text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
+  text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black,
+    1px 1px 0 black;
 }
 
 @font-face {
-  font-family: 'PartialSansKR-Regular';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-1@1.1/PartialSansKR-Regular.woff2') format('woff2');
+  font-family: "PartialSansKR-Regular";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-1@1.1/PartialSansKR-Regular.woff2")
+    format("woff2");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'SpoqaHanSansNeo-Regular';
-  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SpoqaHanSansNeo-Regular.woff') format('woff');
+  font-family: "SpoqaHanSansNeo-Regular";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SpoqaHanSansNeo-Regular.woff")
+    format("woff");
   font-weight: normal;
   font-style: normal;
 }
 
-@layer components{
-  .bg--layout{
+@layer components {
+  .bg--layout {
     background-color: rgb(246, 249, 255);
     position: absolute;
     top: 0;
-    left : 50%;
+    left: 50%;
     transform: translate(-50%, 0%);
     min-height: 100vh;
     max-width: 500px;
-    width : 100%;
+    width: 100%;
   }
-  .img--layout{
-    position : absolute;
-    top : 0;
-    left : 50%;
+  .img--layout {
+    position: absolute;
+    top: 0;
+    left: 50%;
     transform: translate(-50%, 0%);
     object-fit: cover;
-    min-height: 100vh;
+    height: 100vh;
     max-width: 500px;
-    width : 100%;
+    width: 100%;
+    z-index: 1;
   }
-  .blur--layout{
-    position : absolute;
-    top : 0;
-    left : 50%;
+  .blur--layout {
+    position: absolute;
+    top: 0;
+    left: 50%;
     transform: translate(-50%, 0%);
-    min-height: 100vh;
+    height: 100vh;
     max-width: 500px;
-    width : 100%;
+    width: 100%;
     -webkit-backdrop-filter: blur(12px);
     backdrop-filter: blur(12px);
+    z-index: 2;
   }
 }

@@ -48,7 +48,7 @@ const KakaoShareBtn = () => {
           description: "설명 영역입니다.",
           host_nickname: userInfo.hostName,
           hostId: userInfo.id,
-          url: `http://localhost:3000?hostId=${userInfo.id}`,
+          url: `https://www.young-season.site/?hostId=${userInfo.id}`,
         },
       });
     }
