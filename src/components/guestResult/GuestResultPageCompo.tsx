@@ -45,12 +45,9 @@ const GuestResultPageCompo = () => {
     : "";
   const { imgUrl } = useGetImage(imgNum);
   const nickname = data.data ? data.data.hostName : "";
-  if (isLoading || !data)
-    return (
-      <>
-        <ProgressCompo />
-      </>
-    );
+  if (isLoading) return <ProgressCompo />;
+  if (error) return <div>에러가 발생했습니다.</div>;
+  if (!data || !data.data) return <div>데이터가 없습니다.</div>;
   return (
     <>
       <main className="bg--layout">

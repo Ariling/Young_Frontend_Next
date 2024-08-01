@@ -1,11 +1,16 @@
 import React from "react";
-import HostPagination from "./HostPagination";
 import { UtilBtn } from "@/styles/buttonStyle";
 import { useRouter } from "next/router";
 import ImgDownloadBtn from "./ImgDownloadBtn";
 import Report from "@/svg/report-icon.svg";
 import { IHostDeploy } from "@/types/THost";
 import GuestResultLayout from "@/components/layout/GuestResultLayout";
+import dynamic from "next/dynamic";
+
+const HostPagination = dynamic(
+  () => import("@/components/HostResult/HostPagination"),
+  { ssr: false }
+);
 
 const HostDeployForm = (prop: IHostDeploy) => {
   const router = useRouter();

@@ -16,6 +16,7 @@ const HostPagination = () => {
     queryKey: ["host-resultPage", pageNum],
     queryFn: useGetPageResult,
   });
+  const getData = useHostResultStore.use.data();
   const setData = useHostResultStore.use.setData();
   const setUser = useUserStore.use.setUser();
   const userInfo = useUserStore.getState().userInfo;
@@ -74,7 +75,7 @@ const HostPagination = () => {
           <div>페이지 불러오는 중</div>
         )}
         <Pagination
-          totalPageNum={Math.ceil(data.total / 5)}
+          totalPageNum={Math.ceil(getData.total / 5)}
           pageNum={pageNum}
           setPageNum={setPageNum}
         />

@@ -26,7 +26,7 @@ export const useHostResultStore = createSelectors(
       data: {
         guests: [],
         page: 1,
-        total: 0,
+        total: 1,
       },
       // 이래야 functional update가 가능하다고 한다.
       setData: (prev: SetStateAction<Idata>) => {
