@@ -1,6 +1,6 @@
 import { useUserStore } from "@/store/user";
 import { UtilBtn } from "@/styles/buttonStyle";
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import Copy from "@/svg/copy.svg";
 
 declare global {
@@ -12,6 +12,8 @@ declare global {
 const userInfo = useUserStore.getState().userInfo;
 const KakaoShareBtn: React.FC = () => {
   const shareKakao = useCallback(() => {
+    console.log(window.Kakao);
+    console.log("동작은 하니?");
     if (window.Kakao) {
       window.Kakao.Share.createCustomButton({
         container: "#kakaotalk-sharing-btn",
@@ -24,12 +26,6 @@ const KakaoShareBtn: React.FC = () => {
           url: `https://young-season.site/?hostId=${userInfo.id}`,
         },
       });
-    }
-  }, []);
-
-  useEffect(() => {
-    if (window.Kakao && !window.Kakao.isInitialized()) {
-      window.Kakao.init(process.env.NEXT_PUBLIC_KAKAO_API_KEY);
     }
   }, []);
 

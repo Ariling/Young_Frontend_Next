@@ -2,9 +2,31 @@ import "@/styles/globals.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import type { AppProps } from "next/app";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+declare global {
+  interface Window {
+    Kakao: any;
+  }
+}
 
 export default function App({ Component, pageProps }: AppProps) {
+  useEffect(() => {
+    const kakaoScript = document.createElement("script");
+    kakaoScript.src = "https://developers.kakao.com/sdk/js/kakao.js";
+    kakaoScript.async = true;
+    document.head.appendChild(kakaoScript);
+
+    kakaoScript.onload = () => {
+      if (window.Kakao && !window.Kakao.isInitialized()) {
+        window.Kakao.init(process.env.NEXT_PUBLIC_KAKAO_API_KEY);
+      }
+    };
+
+    return () => {
+      document.head.removeChild(kakaoScript);
+    };
+  }, []);
   const [queryClient] = useState(
     () =>
       new QueryClient({
