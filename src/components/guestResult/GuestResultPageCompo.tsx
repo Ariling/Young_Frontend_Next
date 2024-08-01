@@ -60,7 +60,7 @@ const GuestResultPageCompo = () => {
               내가 생각하는 {nickname}
               {guestSuffixArray[0]}?
             </NicknameTitle>
-            {data.data && (
+            {data && data.data && (
               <GuestResultLayout
                 imgsrc={imgUrl}
                 title={data.data.title}

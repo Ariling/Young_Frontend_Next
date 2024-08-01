@@ -20,16 +20,18 @@ const HostPagination = () => {
   const setUser = useUserStore.use.setUser();
   const userInfo = useUserStore.getState().userInfo;
   useEffect(() => {
-    setData({
-      guests: data?.guests,
-      page: data?.page,
-      total: data?.total,
-    });
+    if (data) {
+      setData({
+        guests: data?.guests,
+        page: data?.page,
+        total: data?.total,
+      });
+    }
   }, [data]);
   return (
     <>
       <WhiteBox isStatistic className="mb-4">
-        {!isLoading && data?.guests && Array.isArray(data?.guests) ? (
+        {!isLoading && data && data.guests && Array.isArray(data.guests) ? (
           <>
             <TableHeaderContainer>
               <NicknameBox>
