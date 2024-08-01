@@ -20,11 +20,17 @@ const HostPagination = () => {
   const setUser = useUserStore.use.setUser();
   const userInfo = useUserStore.getState().userInfo;
   useEffect(() => {
-    if (data) {
+    if (!data) {
       setData({
-        guests: data?.guests,
-        page: data?.page,
-        total: data?.total,
+        guests: [],
+        page: 1,
+        total: 1,
+      });
+    } else {
+      setData({
+        guests: data.guests,
+        page: data.page,
+        total: data.total,
       });
     }
   }, [data]);
