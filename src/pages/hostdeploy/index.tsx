@@ -12,10 +12,15 @@ import {
 import { useGetHostResult } from "@/apis/host";
 import useGetImage from "@/query/get/useGetImage";
 import { useUserStore } from "@/store/user";
-import KakaoShareBtn from "@/components/utils/KakaoShareBtn";
 import HostDeployLayout from "@/components/layout/HostDeployLayout";
 import useGetSuffixArray from "@/hooks/useGetSuffixArray";
 import ProgressCompo from "@/components/utils/ProgressCompo";
+import dynamic from "next/dynamic";
+
+const KakaoShareBtn = dynamic(
+  () => import("@/components/utils/KakaoShareBtn"),
+  { ssr: false }
+);
 
 const Index = ({ dehydratedState }: { dehydratedState: DehydratedState }) => {
   const { data, error, isLoading } = useQuery({
