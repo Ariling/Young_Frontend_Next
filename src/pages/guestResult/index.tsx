@@ -8,16 +8,6 @@ const GuestResultPageCompo = dynamic(
 );
 
 const Index = () => {
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  if (!isClient) {
-    return <ProgressCompo />;
-  }
-
   return <GuestResultPageCompo />;
 };
 

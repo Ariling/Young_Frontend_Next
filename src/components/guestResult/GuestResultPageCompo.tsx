@@ -33,18 +33,20 @@ const GuestResultPageCompo = () => {
       !hostId ||
       !guestName ||
       !data ||
+      !data.data ||
       error
     ) {
       router.replace("/login");
     }
   }, [questionArray, router, hostId, guestName, data, error]);
-  const imgNum = data.data
-    ? String(data.data.color) +
-      String(data.data.emoji) +
-      String(data.data.animal)
-    : "";
+  const imgNum =
+    data && data.data
+      ? String(data.data.color) +
+        String(data.data.emoji) +
+        String(data.data.animal)
+      : "";
   const { imgUrl } = useGetImage(imgNum);
-  const nickname = data.data ? data.data.hostName : "";
+  const nickname = data && data.data ? data.data.hostName : "";
   if (isLoading) return <ProgressCompo />;
   if (error) return <div>에러가 발생했습니다.</div>;
   if (!data || !data.data) return <div>데이터가 없습니다.</div>;
