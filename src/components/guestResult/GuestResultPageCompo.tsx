@@ -5,7 +5,7 @@ import useGetImage from "@/query/get/useGetImage";
 import { useQuestionStore } from "@/store/question";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import ProgressCompo from "../utils/ProgressCompo";
 import NicknameTitle from "../utils/NicknameTitle";
 import GuestResultLayout from "../layout/GuestResultLayout";
@@ -27,6 +27,8 @@ const GuestResultPageCompo = () => {
       postGuestResult(hostId as string, guestName as string, questionArray),
     enabled: !!hostId && !!guestName,
   });
+  let imgNum = useRef("000");
+  const { imgUrl, refetch } = useGetImage(imgNum.current);
   useEffect(() => {
     if (
       questionArray.some((el) => el === 0) ||
@@ -37,15 +39,14 @@ const GuestResultPageCompo = () => {
       error
     ) {
       router.replace("/login");
-    }
-  }, [questionArray, router, hostId, guestName, data, error]);
-  const imgNum =
-    data && data.data
-      ? String(data.data.color) +
+    } else if (data && data.data) {
+      imgNum.current =
+        String(data.data.color) +
         String(data.data.emoji) +
-        String(data.data.animal)
-      : "";
-  const { imgUrl } = useGetImage(imgNum);
+        String(data.data.animal);
+      refetch();
+    }
+  }, [questionArray, router, hostId, guestName, data, error, refetch]);
   const nickname = data && data.data ? data.data.hostName : "";
   if (isLoading) return <ProgressCompo />;
   if (error) return <div>에러가 발생했습니다.</div>;
