@@ -35,10 +35,12 @@ const Index = ({ dehydratedState }: { dehydratedState: DehydratedState }) => {
   const hostSuffixArray = useGetSuffixArray(hostName) as string[];
   const { imgUrl } = useGetImage(image);
   const resetInfo = useUserStore.use.resetInfo();
-  if (error || !hostName) {
+  if (!hostName) {
     alert("로그인을 진행해주세요");
     resetInfo();
     router.replace("/login");
+  } else if (error) {
+    console.log(error);
   } else if (
     data &&
     (data.message === "Bad Request" || data.message === "User Not Allowed")

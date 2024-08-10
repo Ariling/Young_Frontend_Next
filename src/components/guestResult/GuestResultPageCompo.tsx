@@ -34,8 +34,6 @@ const GuestResultPageCompo = () => {
       questionArray.some((el) => el === 0) ||
       !hostId ||
       !guestName ||
-      !data ||
-      !data.data ||
       error
     ) {
       router.replace("/login");
