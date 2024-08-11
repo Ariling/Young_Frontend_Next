@@ -35,18 +35,18 @@ const Index = ({ dehydratedState }: { dehydratedState: DehydratedState }) => {
   const hostSuffixArray = useGetSuffixArray(hostName) as string[];
   const { imgUrl } = useGetImage(image);
   const resetInfo = useUserStore.use.resetInfo();
-  if (!hostName) {
+  if (!hostName || (error && error.message === "Unauthorized")) {
     alert("로그인을 진행해주세요");
     resetInfo();
     router.replace("/login");
-  } else if (error) {
-    console.log(error);
   } else if (
-    data &&
-    (data.message === "Bad Request" || data.message === "User Not Allowed")
+    error &&
+    (error.message === "Bad Request" || error.message === "User Not Allowed")
   ) {
     alert("잘못된 접근입니다.");
     router.back();
+  } else if (error) {
+    console.log(error);
   }
   if (isLoading)
     return (

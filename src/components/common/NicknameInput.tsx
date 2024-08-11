@@ -50,9 +50,7 @@ const NicknameInput = ({ hostName }: { hostName: string }) => {
             hostName: result.data.data.name,
             token: result.data.data.token,
           });
-          route.replace(
-            `/guestQuestion?hostId=${id}&nickname=${data}&hostname=${hostName}`
-          );
+          route.replace("/hostLoading");
         }
         dispatch({ type: "RESET" });
       } catch (error) {
