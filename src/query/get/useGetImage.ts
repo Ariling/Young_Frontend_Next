@@ -20,12 +20,16 @@ const useGetImage = (imgNum: string) => {
     return URL.createObjectURL(response.data);
   };
 
-  const { data: imgUrl = "", refetch } = useQuery<string>({
+  const {
+    data: imgUrl = "",
+    refetch,
+    isLoading,
+  } = useQuery<string>({
     queryKey: ["get-image", imgNum],
     queryFn: fetchImage,
   });
 
-  return { imgUrl, refetch };
+  return { imgUrl, refetch, isLoading };
 };
 
 export default useGetImage;
