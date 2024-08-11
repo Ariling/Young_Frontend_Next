@@ -17,6 +17,7 @@ import { useUserStore } from "@/store/user";
 import StatisticForm from "@/components/HostStatistic/StatisticForm";
 import BackCompo from "@/components/utils/BackCompo";
 import ProgressCompo from "@/components/utils/ProgressCompo";
+import { AxiosError } from "axios";
 
 const Index = ({ dehydratedState }: { dehydratedState: DehydratedState }) => {
   const resetInfo = useUserStore.use.resetInfo();
@@ -28,15 +29,15 @@ const Index = ({ dehydratedState }: { dehydratedState: DehydratedState }) => {
     queryKey: ["host-stats"],
     queryFn: useGetStatistic,
   });
-  if (error || !hostNickname) {
+  if (
+    !hostNickname ||
+    (error && (error as AxiosError).response?.status === 401)
+  ) {
     alert("로그인을 진행해주세요");
     resetInfo();
     router.replace("/login");
-  } else if (
-    data &&
-    (data.message === "Bad Request" || data.message === "User Not Allowed")
-  ) {
-    alert("잘못된 접근입니다.");
+  } else if (error && (error as AxiosError).response?.status === 403) {
+    alert("잘못된 접근입니다");
     router.back();
   }
   useEffect(() => {

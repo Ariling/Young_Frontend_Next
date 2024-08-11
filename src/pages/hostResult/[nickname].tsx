@@ -15,6 +15,7 @@ import { useUserStore } from "@/store/user";
 import HostResultForm from "@/components/HostResult/HostResultForm";
 import BackCompo from "@/components/utils/BackCompo";
 import ProgressCompo from "@/components/utils/ProgressCompo";
+import { AxiosError } from "axios";
 
 const Index = () => {
   const router = useRouter();
@@ -28,14 +29,15 @@ const Index = () => {
     queryKey: ["host-guest-result", guestId],
     queryFn: useGetHostGuestResult,
   });
-  if (error || !hostNickname || !guestName) {
+  if (
+    !hostNickname ||
+    !guestName ||
+    (error && (error as AxiosError).response?.status === 401)
+  ) {
     alert("로그인을 진행해주세요");
     resetInfo();
     router.replace("/login");
-  } else if (
-    data &&
-    (data.message === "Bad Request" || data.message === "User Not Allowed")
-  ) {
+  } else if (error) {
     alert("잘못된 접근입니다.");
     router.back();
   } else if (data && data.message === "Guest Result") {
