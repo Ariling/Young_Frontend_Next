@@ -5,8 +5,9 @@ import { IHostDeploy } from "@/types/THost";
 import useGetImage from "@/query/get/useGetImage";
 
 const HostDeployLayout = (props: IHostDeploy) => {
-  const image = props.data && props.data.image ? props.data.image : "000";
-  const { imgUrl, isLoading } = useGetImage(image);
+  const image =
+    props.data && props.data.data.image ? props.data.data.image : "000";
+  const { imgUrl } = useGetImage(image);
   return (
     <>
       {
@@ -16,7 +17,6 @@ const HostDeployLayout = (props: IHostDeploy) => {
         props.data.data.title &&
         props.data.data.first &&
         props.data.data.now &&
-        !isLoading &&
         imgUrl ? (
           <>
             <HostDeployForm
