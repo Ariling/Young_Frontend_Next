@@ -10,7 +10,6 @@ import {
   useQuery,
 } from "@tanstack/react-query";
 import { useGetHostResult } from "@/apis/host";
-import useGetImage from "@/query/get/useGetImage";
 import { useUserStore } from "@/store/user";
 import HostDeployLayout from "@/components/layout/HostDeployLayout";
 import useGetSuffixArray from "@/hooks/useGetSuffixArray";
@@ -30,11 +29,9 @@ const Index = ({ dehydratedState }: { dehydratedState: DehydratedState }) => {
     retry: false,
   });
   const router = useRouter();
-  const image = data?.data.image ?? "000";
   const divRef = useRef<HTMLDivElement>(null);
   const hostName = decodeURIComponent(router.query.name as string);
   const hostSuffixArray = useGetSuffixArray(hostName) as string[];
-  const { imgUrl } = useGetImage(image);
   const resetInfo = useUserStore.use.resetInfo();
   if (!hostName || (error && (error as AxiosError).response?.status === 401)) {
     alert("로그인을 진행해주세요");
@@ -63,7 +60,6 @@ const Index = ({ dehydratedState }: { dehydratedState: DehydratedState }) => {
               <HostDeployLayout
                 data={data}
                 hostName={hostName}
-                imgUrl={imgUrl}
                 divRef={divRef}
               />
               <KakaoShareBtn />

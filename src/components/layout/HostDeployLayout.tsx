@@ -2,8 +2,11 @@ import React from "react";
 import HostDeployForm from "../HostResult/HostDeployForm";
 import GuestImage from "../utils/GuestImage";
 import { IHostDeploy } from "@/types/THost";
+import useGetImage from "@/query/get/useGetImage";
 
 const HostDeployLayout = (props: IHostDeploy) => {
+  const image = props.data && props.data.image ? props.data.image : "000";
+  const { imgUrl } = useGetImage(image);
   return (
     <>
       {
@@ -17,14 +20,14 @@ const HostDeployLayout = (props: IHostDeploy) => {
             <HostDeployForm
               data={props.data}
               hostName={props.hostName}
-              imgUrl={props.imgUrl}
+              imgUrl={imgUrl}
               divRef={props.divRef}
             />
           </>
         ) : (
           <>
             <div className="mt-3 mb-[60px]">
-              <GuestImage src={props.imgUrl} />
+              <GuestImage src={imgUrl} />
             </div>
           </>
         )

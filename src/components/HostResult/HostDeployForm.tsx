@@ -12,7 +12,7 @@ const HostPagination = dynamic(
   { ssr: false }
 );
 
-const HostDeployForm = (prop: IHostDeploy) => {
+const HostDeployForm = (prop: Required<IHostDeploy>) => {
   const router = useRouter();
   return (
     <>

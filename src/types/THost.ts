@@ -20,7 +20,7 @@ export interface Istatistics {
 export interface IHostDeploy {
   data: any;
   hostName: string;
-  imgUrl: string;
+  imgUrl?: string;
   divRef: RefObject<HTMLDivElement>;
 }
 
