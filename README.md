@@ -97,9 +97,13 @@
 
 </td>
 <td width="60%">
-  
-<img width="210" height="375" alt="스크린샷 2024-08-10 오후 8 21 35" src="https://github.com/user-attachments/assets/a1339ebf-cb2e-4976-a191-c55cca3596e7">
-<img width="210" height="375" alt="스크린샷 2024-08-10 오후 8 22 09" src="https://github.com/user-attachments/assets/ead9148c-c38d-480a-8690-2bb2ba65d83c">
+  <img width="210" height="375" alt="스크린샷 2024-08-11 오후 3 20 07" src="https://github.com/user-attachments/assets/1f781c85-213e-44b0-95e3-ae7f0c3f556c">
+<img width="210" height="375" alt="스크린샷 2024-08-11 오후 3 20 13" src="https://github.com/user-attachments/assets/4f3c2c8c-7ccb-408b-ba8a-9685bc5349ed">
+<img width="210" height="375" alt="스크린샷 2024-08-11 오후 3 20 42" src="https://github.com/user-attachments/assets/1cce896e-2bd3-468f-8c14-796a036dab65">
+<img width="210" height="375" alt="스크린샷 2024-08-11 오후 3 20 27" src="https://github.com/user-attachments/assets/20b1ed66-1ea2-4811-8593-b91144e22c8b">
+
+
+
 
 </td>
 </tr>
