@@ -43,7 +43,7 @@ const NicknameInput = ({ hostName }: { hostName: string }) => {
           id: id as string,
           name: data,
         });
-        if (result.data.message === "New User Created") {
+        if (result.success) {
           const setInfo = useUserStore.use.setInfo();
           setInfo({
             id: result.data.data.id,

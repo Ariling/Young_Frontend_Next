@@ -46,7 +46,11 @@ export const Pagination = (props: PaginationProp) => {
       )}
       <Next
         onClick={() => {
-          props.setPageNum(props.pageNum + 1);
+          if (props.totalPageNum === 1) {
+            return;
+          } else {
+            props.setPageNum(props.pageNum + 1);
+          }
         }}
       />
     </PaginationWrapper>
