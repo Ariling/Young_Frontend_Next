@@ -3,9 +3,9 @@ import React, { useEffect, useState } from "react";
 import { styled } from "twin.macro";
 import File from "@/svg/file.svg";
 import Pagination from "../utils/Paginatioin";
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
-import { useGetPageResult } from "@/apis/host";
+import { getPageResult } from "@/apis/host";
 import { useHostResultStore } from "@/store/hostresult";
 import { useUserStore } from "@/store/user";
 
@@ -14,7 +14,8 @@ const HostPagination = () => {
   const router = useRouter();
   const { data, isLoading } = useQuery({
     queryKey: ["host-resultPage", pageNum],
-    queryFn: useGetPageResult,
+    queryFn: () => getPageResult(pageNum),
+    placeholderData: keepPreviousData,
   });
   const getData = useHostResultStore.use.data();
   const setData = useHostResultStore.use.setData();

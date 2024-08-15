@@ -61,17 +61,13 @@ export const useGetHostResult = async () => {
   return response.data;
 };
 
-export const useGetPageResult = async () => {
+export const getPageResult = async (page: number) => {
   const data = useUserStore.getState().userInfo;
-  const page = useHostResultStore.getState().data;
-  const response = await axiosInstance.get(
-    `/guests/${data.id}?page=${page.page}`,
-    {
-      headers: {
-        Authorization: data.token,
-      },
-    }
-  );
+  const response = await axiosInstance.get(`/guests/${data.id}?page=${page}`, {
+    headers: {
+      Authorization: data.token,
+    },
+  });
 
   return response.data;
 };

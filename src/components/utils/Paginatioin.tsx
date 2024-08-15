@@ -11,7 +11,7 @@ interface PaginationProp {
 }
 
 export const Pagination = (props: PaginationProp) => {
-  const page = useGetPageRange(Math.ceil(props.pageNum / 5));
+  const page = useGetPageRange(props.pageNum, props.totalPageNum);
   return (
     <PaginationWrapper>
       <Back
@@ -23,33 +23,30 @@ export const Pagination = (props: PaginationProp) => {
           }
         }}
       />
+      {page[0] > 1 && <button onClick={() => props.setPageNum(1)}>1</button>}
+      {page[0] > 2 && <span>...</span>}
       {page.map((el) => {
         return (
           <button
             key={el}
             className={props.pageNum === el ? "select" : ""}
             onClick={() => {
-              if (el > props.totalPageNum) {
-                return;
-              } else {
-                props.setPageNum(el);
-              }
+              props.setPageNum(el);
             }}
           >
             {el}
           </button>
         );
       })}
+      {page[page.length - 1] < props.totalPageNum - 1 && <span>...</span>}
+      {page[page.length - 1] < props.totalPageNum && (
+        <button onClick={() => props.setPageNum(props.totalPageNum)}>
+          {props.totalPageNum}
+        </button>
+      )}
       <Next
         onClick={() => {
-          if (
-            props.pageNum === props.totalPageNum ||
-            props.totalPageNum === 0
-          ) {
-            return;
-          } else {
-            props.setPageNum(props.pageNum + 1);
-          }
+          props.setPageNum(props.pageNum + 1);
         }}
       />
     </PaginationWrapper>
