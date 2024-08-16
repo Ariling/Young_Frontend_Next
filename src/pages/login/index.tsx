@@ -1,9 +1,18 @@
 import Image from "next/image";
-import React from "react";
+import React, { useEffect } from "react";
 import BG from "@/images/BG.png";
 import KakaoBtn from "@/components/utils/KakaoBtn";
+import { useUserStore } from "@/store/user";
+import { useRouter } from "next/router";
 
-const index = () => {
+const Index = () => {
+  const userInfo = useUserStore.use.userInfo();
+  const router = useRouter();
+  useEffect(() => {
+    if (userInfo.token !== "") {
+      router.replace(`/hostdeploy?name=${userInfo.hostName}`);
+    }
+  }, []);
   return (
     <main
       className={`flex flex-col items-center justify-center p-7 w-full min-h-screen`}
@@ -17,4 +26,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;
