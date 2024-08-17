@@ -25,7 +25,7 @@ const NicknameInput = ({ hostName }: { hostName: string }) => {
           hostId: id as string,
           guestName: data,
         });
-        if (result.data) {
+        if (result) {
           route.replace(
             `/guestQuestion?hostId=${id}&nickname=${data}&hostname=${hostName}`
           );

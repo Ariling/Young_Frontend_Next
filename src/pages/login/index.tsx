@@ -12,7 +12,7 @@ const Index = () => {
     if (userInfo.token !== "") {
       router.replace(`/hostdeploy?name=${userInfo.hostName}`);
     }
-  }, []);
+  }, [router, userInfo.token, userInfo.hostName]);
   return (
     <main
       className={`flex flex-col items-center justify-center p-7 w-full min-h-screen`}
